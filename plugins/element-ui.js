@@ -1,5 +1,4 @@
-import Vue from 'vue'
-import Element from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/vi'
+import Vue from "vue";
+import Element from "element-ui";
 
-Vue.use(Element, { size: "mini", locale })
+Vue.use(Element, { size: "mini" });

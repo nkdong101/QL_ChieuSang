@@ -70,27 +70,7 @@ export default {
     // https://go.nuxtjs.dev/axios
     "@nuxtjs/axios",
   ],
-  i18n: {
-    /* module options */
-    locales: [
-      { code: "en", iso: "en-US", file: "en.js", dir: "ltr" },
-      { code: "vi", iso: "vi-VN", file: "vi.js", dir: "ltr" },
-    ],
-    langDir: "~/locales",
-    // strategy: 'prefix_except_default',
-    defaultLocale: "en",
-    // vueI18n: {
-    //   fallbackLocale: 'en',
-    //   messages: {
-    //     en: {
-    //       welcome: 'Welcome'
-    //     },
-    //     vi: {
-    //       welcome: 'Xin chào'
-    //     },
-    //   }
-    // }
-  },
+
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
