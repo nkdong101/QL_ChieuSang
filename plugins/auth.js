@@ -59,30 +59,13 @@ export const $auth = {
     });
   },
   logout() {
-    localStorage.clear();
-    this.access_token = "";
-
-    this.user = null;
-    // return new Promise((rs) => {
-    //   GetDataAPI({
-    //     method: "post",
-    //     params: {
-    //       code: this.access_token,
-    //     },
-    //     url: API.Logout,
-    //     action: (re) => {
-    //       localStorage.clear();
-    //       this.access_token = "";
-    //       this.identity = "";
-    //       this.user = null;
-    //       rs();
-    //     },
-    //     error() {
-
-    //       rs();
-    //     },
-    //   });
-    // });
+    return new Promise((rs) => {
+      localStorage.clear();
+      this.access_token = "";
+      this.identity = "";
+      this.user = null;
+      rs();
+    });
   },
 };
 
