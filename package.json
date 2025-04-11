@@ -1,0 +1,42 @@
+{
+  "name": "WEB",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "body-parser": "^1.19.0",
+    "chart.js": "^3.8.0",
+    "chartjs-plugin-datalabels": "^2.2.0",
+    "core-js": "^3.25.3",
+    "docx": "^9.1.1",
+    "element-ui": "^2.15.10",
+    "express": "^4.17.1",
+    "formidable": "^1.2.2",
+    "googleapis": "^109.0.1",
+    "html-pdf": "^3.0.1",
+    "jspdf": "^3.0.0",
+    "jspdf-autotable": "^3.8.4",
+    "moment": "^2.29.1",
+    "nanoid": "2.1.11",
+    "nuxt": "^2.14.6",
+    "phantom-html-to-pdf": "^0.7.0",
+    "sharp": "^0.28.0",
+    "shelljs": "^0.8.4",
+    "text-mask-addons": "^3.8.0",
+    "vue": "^2.7.10",
+    "vue-chartjs": "^4.1.1",
+    "vue-server-renderer": "^2.7.10",
+    "vue-template-compiler": "^2.7.10",
+    "vue-text-mask": "^6.1.2"
+  },
+  "devDependencies": {
+    "sass": "^1.77.8",
+    "sass-loader": "10.1.1"
+  }
+}
