@@ -1,6 +1,6 @@
 <template>
   <div class="app-main-children">
-    <div  class="app-main-children-label">
+    <div class="app-main-children-label">
       <b>{{ title }}</b>
     </div>
     <div class="app-main">
@@ -34,7 +34,7 @@ export default {
   methods: {
     handleClick(item) {
       if (item.path) {
-        this.$router.push(this.localeLocation(item.path, this.$i18n.locale));
+        this.$router.push(item.path);
       }
     },
   },

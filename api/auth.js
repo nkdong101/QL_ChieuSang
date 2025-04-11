@@ -1,14 +1,13 @@
 import express from "express";
 import UserAuthManage from "./obj/UserAuthManage";
-const http = require('http');
-const https = require('https');
-const url = require('url');
+const http = require("http");
+const https = require("https");
+const url = require("url");
 
 UserAuthManage.init();
 
 // Create express router
 const router = express.Router();
-
 
 // 'http://localhost:3000/Account/Callback'
 // oauth2Client.red
@@ -25,73 +24,75 @@ router.use((req, res, next) => {
   next();
 });
 
-router.get('/GoogleLogin', (req, res) => {
+router.get("/GoogleLogin", (req, res) => {
   // Access scopes for read-only Drive activity.
-  res.writeHead(302, { "Location": UserAuthManage.generateAuthUrl() });
+  console.log("GoogleLogin", res);
+  res.writeHead(302, { Location: UserAuthManage.generateAuthUrl() });
   res.end();
 });
 
-router.post('/Logout', (req, res) => {
+router.post("/Logout", (req, res) => {
   // Access scopes for read-only Drive activity.
   let q = req.body;
   let access_token = q.access_token;
   UserAuthManage.remove(access_token);
   res.json({
     Code: 1,
-    Data: 'OK'
+    Data: "OK",
   });
 });
-router.post('/GetUserAuth', (req, res) => {
+router.post("/GetUserAuth", (req, res) => {
   let q = req.body;
   let access_token = q.access_token;
   try {
     const userinfo = UserAuthManage.GetUserAuth(access_token);
     res.json({
       Code: 1,
-      Data: userinfo
+      Data: userinfo,
     });
   } catch (error) {
     res.json({
       Code: 3,
-      ErrMessage: error.message
+      ErrMessage: error.message,
     });
   }
 });
-router.post('/GetUserInfo', async (req, res) => {
+router.post("/GetUserInfo", async (req, res) => {
   let q = req.body;
   let access_token = q.access_token;
   try {
     const userinfo = await UserAuthManage.getUserInfo(access_token);
     res.json({
       Code: 1,
-      Data: userinfo
+      Data: userinfo,
     });
   } catch (error) {
     res.json({
       Code: 3,
-      ErrMessage: error.message
+      ErrMessage: error.message,
     });
   }
 });
 
-router.post('/Callback', async (req, res) => {
+router.post("/Callback", async (req, res) => {
   let q = req.body;
+  console.log("Callback", q);
   try {
     let token = await UserAuthManage.getToken(q.code);
     res.json({
       Code: 1,
-      Data: token
+      Data: token,
     });
   } catch (error) {
     res.json({
       Code: 3,
-      ErrMessage: error.message
+      ErrMessage: error.message,
     });
   }
-})
+});
 
 // Export the server middleware
 export default {
   path: "/auth",
-  handler: router
+  handler: router,
 };

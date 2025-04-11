@@ -1,9 +1,51 @@
 <template>
-  <div class="logging">
-    <img src="~/assets/images/loading.svg" alt="Loading..." width="80px" />
-    Logging in...
+  <div class="loading-overlay">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <p>Đang đăng nhập...</p>
+    </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 9999;
+}
+
+.loading-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+  font-size: 1.2rem;
+}
+
+.spinner {
+  width: 60px;
+  height: 60px;
+  border: 6px solid #ccc;
+  border-top-color: #007bff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+</style>
 
 <script>
 import API from "~/assets/scripts/API";
@@ -24,7 +66,7 @@ export default {
         // SourceAuth: location.origin,
       });
       GetDataAPI({
-        url: API.Login,
+        url: API.Login_Email,
         method: "post",
         params: {
           code: code,
@@ -37,9 +79,9 @@ export default {
             Identity: re.email,
             SourceAuth: location.origin,
           });
-          $auth.userinfo().then(() => {
-            this.$router.push("/");
-          });
+          // $auth.userinfo().then(() => {
+          this.$router.push("/");
+          // });
         },
         error: (error) => {
           localStorage.err_message = error;
@@ -58,12 +100,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.logging {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-</style>

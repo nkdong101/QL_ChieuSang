@@ -37,7 +37,7 @@ export default {
   SetHeaders(headers) {
     this.store.commit("SetHeaders", headers);
     localStorage.access_token = $auth.access_token;
-    // localStorage.identity = $auth.identity;
+    localStorage.identity = $auth.identity;
   },
   /**
    * @return {LoginResult} description

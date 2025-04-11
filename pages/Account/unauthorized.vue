@@ -1,84 +1,89 @@
 <template>
-  <div style="background-color: #fb6e52; color: #fff; overflow: auto">
-    <div
-      class="error-header"
-      style="background: #fff; height: 280px; background-color: white"
-    ></div>
-    <div
-      class="container"
-      style="
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-right: auto;
-        margin-left: auto;
-        width: 1200px;
-        max-width: 100%;
-      "
-    >
-      <section
-        class="error-container text-center"
-        style="background: rgba(0, 0, 0, 0.05); text-align: center"
-      >
-        <h1
-          style="
-            font-size: 110px;
-            font-weight: 300;
-            margin: -118px 0 0 0;
-            text-align: center;
-            color: #fb6e52;
-          "
-        >
-          Error 401
-        </h1>
-        <div class="error-divider" style="margin-top: -27px; padding: 30px 0">
-          <h2
-            style="
-              font-size: 58px;
-              font-weight: 300;
-              margin: 0;
-              text-transform: uppercase;
-            "
-          >
-            Unauthorized Error
-          </h2>
-          <p
-            style="
-              line-height: 1.5em;
-              color: #e5e5e5;
-              font-size: 40px;
-              margin: 0;
-            "
-            class="description"
-            v-html="err_message"
-          ></p>
-        </div>
-        <a
-          href="/"
-          class="return-btn"
-          style="
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 10px 15px;
-            margin-top: 100px;
-            margin-bottom: 30px;
-            display: inline-block;
-            -webkit-border-radius: 5px;
-            -webkit-background-clip: padding-box;
-            -moz-border-radius: 5px;
-            -moz-background-clip: padding;
-            border-radius: 5px;
-            background-clip: padding-box;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 300;
-          "
-        >
-          <i class="fa fa-home" style="margin-right: 5px"></i>
-          Dashboard
-        </a>
-      </section>
+  <div class="error-wrapper">
+    <div class="error-card">
+      <div class="error-circle">
+        <span>401</span>
+      </div>
+      <h2>Unauthorized Access</h2>
+      <p class="error-message" v-html="err_message"></p>
+      <a href="/" class="home-button">
+        <i class="fa fa-arrow-left"></i>
+        Quay về trang chủ
+      </a>
     </div>
   </div>
 </template>
+
+<style lang="scss" scoped>
+$bg-color: #1e1e2f;
+$accent-color: #ff6b6b;
+$text-light: #f1f1f1;
+$text-muted: #ccc;
+
+.error-wrapper {
+  background-color: $bg-color;
+  color: $text-light;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.error-card {
+  background-color: #2c2c3e;
+  border-radius: 16px;
+  padding: 40px 30px;
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.error-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background-color: $accent-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 42px;
+  font-weight: bold;
+  margin: 0 auto 20px;
+  color: #fff;
+}
+
+h2 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.error-message {
+  font-size: 18px;
+  color: $text-muted;
+  margin-bottom: 30px;
+}
+
+.home-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: $accent-color;
+  color: #fff;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($accent-color, 10%);
+  }
+}
+</style>
 
 <script>
 import { $auth } from "~/plugins/auth";
@@ -100,6 +105,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-</style>

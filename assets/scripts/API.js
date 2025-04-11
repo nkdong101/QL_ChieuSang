@@ -5,6 +5,8 @@ export default {
   Account_ResetPassword: linkAPI + "Account/ResetPassword",
   Account_ChangePassword: linkAPI + "Account/ChangePassword",
   Login_User: linkAPI + "Account/Login_User",
+  APP_Zalo_Login: linkAPI + "Account/APP_Zalo_Login",
+  Login_Email: linkAPI + "Account/Login_Email",
   Login: linkAPI + "Account/Login",
   Logout: linkAPI + "Account/Logout",
 

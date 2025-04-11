@@ -17,7 +17,7 @@ export default {
       { name: "format-detection", content: "telephone=no" },
     ],
     link: [
-      { rel: "icon", type: "image/x-icon", href: "/images/icon/vec.jpg" },
+      { rel: "icon", type: "image/x-icon", href: "/images/icon/aaa.jpg" },
       {
         rel: "stylesheet",
         href: "/font-awesome-4.7.0/css/font-awesome.min.css",

@@ -142,13 +142,13 @@ export default {
       });
     },
     onForgotPassword() {
-      this.$message.info("Tính năng này đang được cập nhật!");
+      // this.$message.info("Tính năng này đang được cập nhật!");
     },
     onGoogleLogin() {
-      this.$message.success("Đăng nhập Google (demo)");
+      location.href = "/Auth/GoogleLogin";
     },
     onZaloLogin() {
-      this.$message.success("Đăng nhập Zalo (demo)");
+      // this.$message.success("Đăng nhập Zalo (demo)");
     },
   },
 };
@@ -159,16 +159,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  background: rgb(2, 0, 36);
-  background: radial-gradient(
-    circle,
-    rgba(2, 0, 36, 0.8211659663865546) 7%,
-    rgba(63, 63, 205, 0.9220063025210083) 32%,
-    rgba(47, 93, 200, 1) 52%,
-    rgba(62, 65, 206, 1) 69%,
-    rgba(0, 212, 255, 1) 100%
-  );
+
   padding: 16px;
 
   .el-form {

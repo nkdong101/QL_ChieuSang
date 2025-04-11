@@ -15,6 +15,7 @@ export const $auth = {
   identity: null,
   init() {
     this.access_token = localStorage.access_token;
+    this.identity = localStorage.identity;
     StoreManager.SetHeaders({
       Authorization: `Bearer ${this.access_token}`,
     });
