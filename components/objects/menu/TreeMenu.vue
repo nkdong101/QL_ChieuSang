@@ -18,7 +18,7 @@
       <span
         v-if="data.Id > 0"
         class="custom-tree-node"
-        @click="expand(node)"
+        @click="expand(node, data)"
         :isButton="data.Type_id == 0"
         slot-scope="{ node, data }"
       >
@@ -195,9 +195,9 @@ export default {
                 if (re == "OK" || Number.isInteger(+re)) {
                   if (!_app.form.obj.Id) {
                     isAdd = true;
-                    _app.form.obj.Id = re;
+                    _app.form.obj.Id = Date.now();
                     if (obj.Type_id == 0) {
-                      _app.form.obj.key = re;
+                      _app.form.obj.key = Date.now();
                       _app.form.SelectedItem.Child.push(_app.form.obj);
                     } else {
                       if (_app.form.obj.ParentId != 0)
@@ -287,7 +287,8 @@ export default {
     filterNode(value, data) {
       return data.Id > 0;
     },
-    expand(node) {
+    expand(node, data) {
+      console.log(node, data);
       if (!this.isBtnClick) node.expanded = !node.expanded;
       else this.isBtnClick = false;
       // //console.log(node, this.$refs.tree);
@@ -326,6 +327,7 @@ export default {
         }
       }
       this.form.SelectedItem = data || {};
+      console.log(this.form.SelectedItem);
       if (!this.form.SelectedItem.Child) this.form.SelectedItem.Child = [];
       this.form.ShowForm(title, obj);
     },

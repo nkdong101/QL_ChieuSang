@@ -23,7 +23,7 @@
       <el-popover
         v-show="amountItem < menu.length"
         placement="right"
-        width="400"
+        :width="(menu.length - amountItem) * 105"
         trigger="hover"
         popper-class="more-link-pp"
       >
@@ -116,7 +116,7 @@ export default {
   flex: 0 0 90px;
   overflow: hidden;
   background: #f0f0f0;
-  // border-right: 1px solid #ddd;
+
   height: 100vh;
   display: flex;
   flex-direction: column;
@@ -124,7 +124,7 @@ export default {
   .menu-Logo {
     display: flex;
     justify-content: center;
-    // border-bottom: 1px solid #ddd;
+
     height: 45px;
     img {
       height: 100%;
@@ -152,14 +152,6 @@ export default {
           font-size: 22px;
           width: 20px;
           height: 20px;
-          // background: linear-gradient(to right, #0000ff, #ff0000);
-          // -webkit-background-clip: text;
-          // -moz-background-clip: text;
-          // background-clip: text;
-          // -webkit-text-fill-color: transparent;
-          // ::before {
-          //   display: inline;
-          // }
         }
       }
     }
@@ -198,9 +190,9 @@ export default {
       justify-items: center;
       flex-direction: column;
       text-align: center;
-      // height: 55px;
+
       border-radius: 15px;
-      // border: 1px solid gray;
+
       width: 90%;
       padding: 5px 0;
       cursor: pointer;
@@ -232,14 +224,15 @@ export default {
 
 .more-link-pp {
   .more-link {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    // grid-template-rows: repeat(auto-fill, minmax(80px, 1fr));
+    // flex-wrap: wrap;
+    // justify-content: space-between;
     gap: 5px;
     .menu-link.active {
       .menu-c {
         outline: 1px solid rgb(20, 148, 246);
-        // background-color: ;
       }
     }
     .menu-link {
@@ -250,27 +243,14 @@ export default {
       align-items: center;
       width: 80px;
       position: relative;
-      // &::before {
-      //   content: "";
-      //   position: absolute;
-      //   width: 0;
-      //   height: 30%;
-      //   background-color: black;
-      //   left: 2px;
-      //   border-radius: 50px;
-      // }
 
-      // &:hover::before {
-      //   width: 3px;
-      //   transition: all 0.3s ease;
-      // }
       .menu-c {
         border-radius: 10px;
         display: flex;
         justify-content: center;
         flex-direction: column;
         text-align: center;
-        // height: 55px;
+
         padding: 10px 0px;
         cursor: pointer;
         &:hover {

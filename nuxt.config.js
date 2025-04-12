@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "Hệ thống đèn chiếu sáng", // 'Procurement Tool',
+    title: "Hệ thống đèn chiếu sáng",
     htmlAttrs: {
       lang: "en",
     },

@@ -1,19 +1,24 @@
-import { FormElement, FormElementType, FormInfo } from "~/assets/scripts/base/FormInfo";
+import {
+  FormElement,
+  FormElementType,
+  FormInfo,
+} from "~/assets/scripts/base/FormInfo";
 import { SelectOption } from "../base/SelectOption";
 import { Para } from "../Para";
-export default class Office {
+import Address from "./menu/Location";
+export default class dm_Lighting_Group {
+  Location = new Address();
   /** @type {string} - description */
-  Name;
+  Code;
+
   /** @type {string} - description */
-  Serial;
-  /** @type {string} - description */
-  ADCode;
+  Address;
   /** @type {number} - description */
-  Use;
+  Height;
   /** @type {number} - description */
-  OfficeType;
+  Hangsx_id;
   /** @type {number} - description */
-  Sequency;
+  Column_Type_id;
   /** @type {number} - description */
   Id;
   /** @type {string} - description */
@@ -25,38 +30,40 @@ export default class Office {
   /** @type {string} - description */
   UserUpdate;
 
-
   _formElements = {
-    Name: new FormElement({
-      label: "Tên",
-      model: "Name",
+    Address: new FormElement({
+      label: "Địa chỉ",
+      model: "Address",
       type: FormElementType.text,
     }),
-    Serial: new FormElement({
-      label: "Số Serial",
-      model: "Serial",
+    Code: new FormElement({
+      label: "Mã",
+      model: "Code",
       type: FormElementType.text,
     }),
-    ADCode: new FormElement({
-      label: "AD Code",
-      model: "ADCode",
-      type: FormElementType.text,
+    Height: new FormElement({
+      label: "Cao",
+      model: "Height",
+      type: FormElementType.number,
     }),
-    Use: new FormElement({
-      label: "Trạng thái",
-      model: "Use",
+    Hangsx_id: new FormElement({
+      label: "Hãng sản xuất",
+      model: "Hangsx_id",
       type: FormElementType.select,
-      options: Para.Para_Active,
     }),
-    OfficeType: new FormElement({
-      label:  "Loại văn phòng",
-      model: "OfficeType",
+    Column_Type_id: new FormElement({
+      label: "Loại cột",
+      model: "Column_Type_id",
       type: FormElementType.select,
-      options: Para.OfficeType,
     }),
-    Sequency: new FormElement({
-      label:  "Trình tự",
-      model: "Sequency",
+    Location_lng: new FormElement({
+      label: "Kinh độ",
+      model: "Location.Lng",
+      type: FormElementType.text,
+    }),
+    Location_lat: new FormElement({
+      label: "Vĩ độ",
+      model: "Location.Lat",
       type: FormElementType.text,
     }),
     Id: new FormElement({
@@ -84,19 +91,18 @@ export default class Office {
       model: "UserUpdate",
       type: FormElementType.text,
     }),
-
   };
 
   /**
    *
-   * @param {Office} obj
+   * @param {dm_Lighting_Group} obj
    */
   constructor(obj) {
     this.update(obj);
   }
   /**
    *
-   * @param {Office} obj
+   * @param {dm_Lighting_Group} obj
    */
   update(obj) {
     Object.assign(this, obj);
@@ -105,20 +111,30 @@ export default class Office {
     return {
       ...this,
       _formElements: undefined,
-    }
+    };
   }
   form() {
     return new FormInfo({
       formData: this,
       elements: [
-        this._formElements.Serial,
-        this._formElements.Name,
-        this._formElements.OfficeType,
-        this._formElements.ADCode,
-        this._formElements.Use,
-        this._formElements.Sequency,
+        new FormElement({
+          child: [this._formElements.Code, this._formElements.Height],
+        }),
+        new FormElement({
+          child: [
+            this._formElements.Hangsx_id,
+            this._formElements.Column_Type_id,
+          ],
+        }),
+        new FormElement({
+          child: [
+            this._formElements.Location_lat,
+            this._formElements.Location_lng,
+          ],
+        }),
 
-      ]
+        // this._formElements.Use,
+      ],
     });
   }
 }
