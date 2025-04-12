@@ -29,9 +29,9 @@
 }
 
 .spinner {
-  width: 60px;
-  height: 60px;
-  border: 6px solid #ccc;
+  width: 100px;
+  height: 100px;
+  border: 12px solid #ccc;
   border-top-color: #007bff;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;

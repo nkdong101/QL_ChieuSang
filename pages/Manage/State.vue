@@ -46,7 +46,7 @@ import API from "~/assets/scripts/API";
 import TablePaging from "~/assets/scripts/base/TablePaging";
 import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
 import DefaultForm from "~/assets/scripts/base/DefaultForm";
-import Construction from "~/assets/scripts/objects/Construction_Unit";
+import State from "~/assets/scripts/objects/State";
 import { EventBus } from "~/assets/scripts/EventBus.js";
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import {
@@ -61,41 +61,30 @@ export default {
     return {
       isAdd: null,
       tp: new TablePaging({
-        title: "đơn vị thi công",
-        data: API.Construction_GetList,
+        title: "trạng thái",
+        data: API.State_GetList,
 
         cols: [
           new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
+
           new TablePagingCol({
-            title: "Mã đơn vị",
-            data: "Code",
-            min_width: 130,
-          }),
-          new TablePagingCol({
-            title: "Tên đơn vị",
+            title: "Trạng thái",
             data: "Name",
             min_width: 200,
-          }),
-          new TablePagingCol({
-            title: "Email",
-            data: "Email",
-            min_width: 150,
-          }),
-          new TablePagingCol({
-            title: "Số liên hệ",
-            data: "Phone",
-            min_width: 130,
-          }),
-          new TablePagingCol({
-            title: "Người liên hệ",
-            data: "Person",
-            min_width: 130,
           }),
           new TablePagingCol({
             title: "Mô tả",
             data: "Description",
             min_width: 150,
             width: "auto",
+          }),
+
+          new TablePagingCol({
+            title: "Ngày tạo",
+            data: "DateCreate",
+            min_width: 150,
+            // width: "auto",
+            formatter: "date",
           }),
 
           new TablePagingCol({
@@ -107,7 +96,7 @@ export default {
         ],
       }),
       form: new DefaultForm({
-        obj: new Construction(),
+        obj: new State(),
         title: "",
         visible: false,
         width: "500px",
@@ -123,7 +112,7 @@ export default {
           //   }
           // }
           this.form.title = title;
-          this.form.obj = new Construction(obj);
+          this.form.obj = new State(obj);
           this.form.visible = true;
         },
         Save: () => {
@@ -137,10 +126,10 @@ export default {
       this.$refs.tp.LoadData(true);
     },
     Add() {
-      this.form.ShowForm("Thêm đơn vị thi công", true);
+      this.form.ShowForm("Thêm trạng thái", true);
     },
     Edit(row) {
-      this.form.ShowForm("Sửa đơn vị thi công", false, row);
+      this.form.ShowForm("Sửa trạng thái", false, row);
     },
     Delete(row) {
       ShowConfirm({
@@ -151,7 +140,7 @@ export default {
         .then(() => {
           GetDataAPI({
             method: "post",
-            url: API.Construction_Delete,
+            url: API.State_Delete,
             params: row,
             action: (re) => {
               if (re == "OK") {
@@ -174,9 +163,7 @@ export default {
           ShowMessage("Vui lòng nhập đầy đủ thông tin!", MessageType.error);
           return;
         } else {
-          let api = this.form.obj.Id
-            ? API.Construction_Edit
-            : API.Construction_Add;
+          let api = this.form.obj.Id ? API.State_Edit : API.State_Add;
           GetDataAPI({
             method: "post",
             url: api,
