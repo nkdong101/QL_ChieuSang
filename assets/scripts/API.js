@@ -90,6 +90,11 @@ export default {
   Country_Add: linkAPI + "Country/Add",
   Country_Edit: linkAPI + "Country/Edit",
   Country_Delete: linkAPI + "Country/Delete",
+
+  Cable_type_GetList: linkAPI + "Cable_type/GetList",
+  Cable_type_Add: linkAPI + "Cable_type/Add",
+  Cable_type_Edit: linkAPI + "Cable_type/Edit",
+  Cable_type_Delete: linkAPI + "Cable_type/Delete",
 };
 
 export var ServerAPI = {

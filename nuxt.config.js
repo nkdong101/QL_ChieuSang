@@ -55,7 +55,7 @@ export default {
     "@/plugins/something",
     "@/plugins/auth",
     // "@/plugins/i18n",
-
+    { src: "~/plugins/googleMap.js", mode: "client" },
     { src: "~/plugins/chart.js", mode: "client" },
   ],
 

@@ -195,9 +195,9 @@ export default {
                 if (re == "OK" || Number.isInteger(+re)) {
                   if (!_app.form.obj.Id) {
                     isAdd = true;
-                    _app.form.obj.Id = Date.now();
+                    _app.form.obj.Id = re;
                     if (obj.Type_id == 0) {
-                      _app.form.obj.key = Date.now();
+                      _app.form.obj.key = re;
                       _app.form.SelectedItem.Child.push(_app.form.obj);
                     } else {
                       if (_app.form.obj.ParentId != 0)
