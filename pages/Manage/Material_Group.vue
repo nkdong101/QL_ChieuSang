@@ -14,16 +14,16 @@
       <template slot="column-content-button" slot-scope="{ row }">
         <div style="display: flex">
           <el-button
+            type="primary"
             v-if="pagePermission.edit"
             class="icon-btn"
-            type="primary"
             @click="Edit(row)"
           >
             <i class="el-icon-edit"></i
           ></el-button>
           <el-button
-            v-if="pagePermission.delete"
             class="icon-btn"
+            v-if="pagePermission.delete"
             type="danger"
             @click="Delete(row)"
           >
@@ -46,7 +46,7 @@ import API from "~/assets/scripts/API";
 import TablePaging from "~/assets/scripts/base/TablePaging";
 import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
 import DefaultForm from "~/assets/scripts/base/DefaultForm";
-import Cable_type from "~/assets/scripts/objects/BubType";
+import Material_Group from "~/assets/scripts/objects/BubType";
 
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import {
@@ -62,7 +62,7 @@ export default {
       isAdd: null,
       tp: new TablePaging({
         title: "loại đèn",
-        data: API.Cable_type_GetList,
+        data: API.Material_Group_GetList,
 
         cols: [
           new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
@@ -100,7 +100,7 @@ export default {
         ],
       }),
       form: new DefaultForm({
-        obj: new Cable_type(),
+        obj: new Material_Group(),
         title: "",
         visible: false,
         width: "500px",
@@ -116,7 +116,7 @@ export default {
           //   }
           // }
           this.form.title = title;
-          this.form.obj = new Cable_type(obj);
+          this.form.obj = new Material_Group(obj);
           this.form.visible = true;
         },
         Save: () => {
@@ -130,10 +130,10 @@ export default {
       this.$refs.tp.LoadData(true);
     },
     Add() {
-      this.form.ShowForm("Thêm loại đèn", true);
+      this.form.ShowForm("Thêm nhóm vật liệu", true);
     },
     Edit(row) {
-      this.form.ShowForm("Sửa loại đèn", false, row);
+      this.form.ShowForm("Sửa nhóm vật liệu", false, row);
     },
     Delete(row) {
       ShowConfirm({
@@ -144,7 +144,7 @@ export default {
         .then(() => {
           GetDataAPI({
             method: "post",
-            url: API.Cable_type_Delete,
+            url: API.Material_Group_Delete,
             params: row,
             action: (re) => {
               if (re == "OK") {
@@ -167,7 +167,9 @@ export default {
           ShowMessage("Vui lòng nhập đầy đủ thông tin!", MessageType.error);
           return;
         } else {
-          let api = this.form.obj.Id ? API.Cable_type_Edit : API.Cable_type_Add;
+          let api = this.form.obj.Id
+            ? API.Material_Group_Edit
+            : API.Material_Group_Add;
           GetDataAPI({
             method: "post",
             url: api,
