@@ -58,7 +58,7 @@ export default {
         tpRef: "GroupPermissionTable",
         model: {
           // title: "menu",
-          data: API.GroupPermission,
+          data: API.GroupPermission_GetList,
           params: {},
 
           cols: [
@@ -112,11 +112,12 @@ export default {
         },
         Save: () => {
           var _app = this;
+          const api = this.form.obj.Id
+            ? API.GroupPermission_Edit
+            : API.GroupPermission_Add;
           GetDataAPI({
-            method: this.form.obj.Id ? "put" : "post",
-            url:
-              API.GroupPermission +
-              (this.form.obj.Id ? "/" + this.form.obj.Id : ""),
+            method: "post",
+            url: api,
             params: this.form.obj,
             action: function (re) {
               if (re == "OK" || Number.isInteger(+re)) {
@@ -142,8 +143,8 @@ export default {
           })
             .then(() => {
               GetDataAPI({
-                method: "delete",
-                url: API.GroupPermission + "/" + row.Id,
+                method: "post",
+                url: API.GroupPermission_Delete,
                 params: row,
                 action: function (re) {
                   if (re == "OK") {
@@ -177,13 +178,6 @@ export default {
     Edit(row) {
       this.form.ShowForm("Sửa nhóm quyền", row);
     },
-  },
-  beforeMount() {
-    EventBus.$on("Add", this.Add);
-  },
-
-  beforeDestroy() {
-    EventBus.$off("Add", this.Add);
   },
 };
 </script>

@@ -76,7 +76,7 @@ export default {
   BulbType_Edit: linkAPI + "BulbType/Edit",
   BulbType_Delete: linkAPI + "BulbType/Delete",
 
-  GroupPermission_GetList: linkAPI + "GroupPermission/GetList",
+  GroupPermission_GetList: linkAPI + "GroupPermission/Get",
   GroupPermission_Add: linkAPI + "GroupPermission/Add",
   GroupPermission_Edit: linkAPI + "GroupPermission/Edit",
   GroupPermission_Delete: linkAPI + "GroupPermission/Delete",
@@ -90,6 +90,11 @@ export default {
   Country_Add: linkAPI + "Country/Add",
   Country_Edit: linkAPI + "Country/Edit",
   Country_Delete: linkAPI + "Country/Delete",
+
+  Cable_type_GetList: linkAPI + "Cable_type/GetList",
+  Cable_type_Add: linkAPI + "Cable_type/Add",
+  Cable_type_Edit: linkAPI + "Cable_type/Edit",
+  Cable_type_Delete: linkAPI + "Cable_type/Delete",
 };
 
 export var ServerAPI = {

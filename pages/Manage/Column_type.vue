@@ -46,7 +46,7 @@ import API from "~/assets/scripts/API";
 import TablePaging from "~/assets/scripts/base/TablePaging";
 import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
 import DefaultForm from "~/assets/scripts/base/DefaultForm";
-import Construction from "~/assets/scripts/objects/Construction_Unit";
+import Column_type from "~/assets/scripts/objects/Column_type";
 import { EventBus } from "~/assets/scripts/EventBus.js";
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import {
@@ -61,41 +61,35 @@ export default {
     return {
       isAdd: null,
       tp: new TablePaging({
-        title: "đơn vị thi công",
-        data: API.Construction_GetList,
+        title: "loại cột",
+        data: API.Column_type_GetList,
 
         cols: [
           new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
+
           new TablePagingCol({
-            title: "Mã đơn vị",
+            title: "Mã loại cột",
             data: "Code",
-            min_width: 130,
-          }),
-          new TablePagingCol({
-            title: "Tên đơn vị",
-            data: "Name",
-            min_width: 200,
-          }),
-          new TablePagingCol({
-            title: "Email",
-            data: "Email",
             min_width: 150,
           }),
           new TablePagingCol({
-            title: "Số liên hệ",
-            data: "Phone",
-            min_width: 130,
-          }),
-          new TablePagingCol({
-            title: "Người liên hệ",
-            data: "Person",
-            min_width: 130,
+            title: "Tên loại cột đèn",
+            data: "Name",
+            min_width: 200,
           }),
           new TablePagingCol({
             title: "Mô tả",
             data: "Description",
             min_width: 150,
             width: "auto",
+          }),
+
+          new TablePagingCol({
+            title: "Ngày tạo",
+            data: "DateCreate",
+            min_width: 150,
+            // width: "auto",
+            formatter: "date",
           }),
 
           new TablePagingCol({
@@ -107,10 +101,10 @@ export default {
         ],
       }),
       form: new DefaultForm({
-        obj: new Construction(),
+        obj: new Column_type(),
         title: "",
         visible: false,
-        width: "500px",
+        width: "600px",
         ShowForm: (title, isAdd, obj) => {
           this.isAdd = isAdd;
           var _app = this;
@@ -123,7 +117,7 @@ export default {
           //   }
           // }
           this.form.title = title;
-          this.form.obj = new Construction(obj);
+          this.form.obj = new Column_type(obj);
           this.form.visible = true;
         },
         Save: () => {
@@ -137,10 +131,10 @@ export default {
       this.$refs.tp.LoadData(true);
     },
     Add() {
-      this.form.ShowForm("Thêm đơn vị thi công", true);
+      this.form.ShowForm("Thêm loại cột", true);
     },
     Edit(row) {
-      this.form.ShowForm("Sửa đơn vị thi công", false, row);
+      this.form.ShowForm("Sửa loại cột", false, row);
     },
     Delete(row) {
       ShowConfirm({
@@ -151,7 +145,7 @@ export default {
         .then(() => {
           GetDataAPI({
             method: "post",
-            url: API.Construction_Delete,
+            url: API.Column_type_Delete,
             params: row,
             action: (re) => {
               if (re == "OK") {
@@ -175,18 +169,27 @@ export default {
           return;
         } else {
           let api = this.form.obj.Id
-            ? API.Construction_Edit
-            : API.Construction_Add;
-          GetDataAPI({
-            method: "post",
-            url: api,
-            params: this.form.obj.toJSON(),
-            action: function (re) {
-              _app.LoadData();
-              _app.form.visible = false;
-              ShowMessage("Lưu thành công");
-            },
-          });
+            ? API.Column_type_Edit
+            : API.Column_type_Add;
+
+          this.$refs.form
+            .getEntry("Image")
+            .submitUpload()
+            .then((re) => {
+              console.log(re);
+              this.form.obj.Image = re.join("/n");
+              // return;
+              GetDataAPI({
+                method: "post",
+                url: api,
+                params: this.form.obj.toJSON(),
+                action: function (re) {
+                  _app.LoadData();
+                  _app.form.visible = false;
+                  ShowMessage("Lưu thành công");
+                },
+              });
+            });
         }
       });
     },

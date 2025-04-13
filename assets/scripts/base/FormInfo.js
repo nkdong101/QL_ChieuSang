@@ -1,8 +1,5 @@
-import {
-  Global
-} from "../Functions";
+import { Global } from "../Functions";
 import BaseWidget, { BaseWidgetDefaultParams } from "./BaseWidget";
-
 
 export class FormInfo {
   constructor({
@@ -10,7 +7,6 @@ export class FormInfo {
     formData = null,
     labelWidth = undefined,
     elements = [],
-
   }) {
     this.labelTop = labelTop;
     this.formData = formData;
@@ -42,39 +38,60 @@ var defaultParams = function () {
     forceDisabled: null,
     isVisible: null,
     required: false,
-    validate: function (data, $this = {
-      getElement: function (id) { return new FormElement() },
-      getEntry: function (id) { return null; },
-      formInfo: {
-        vm: {
-          getElement: function (id) { return { model: new FormElement() } },
-          getEntry: function (id) { },
-        }
+    validate: function (
+      data,
+      $this = {
+        getElement: function (id) {
+          return new FormElement();
+        },
+        getEntry: function (id) {
+          return null;
+        },
+        formInfo: {
+          vm: {
+            getElement: function (id) {
+              return { model: new FormElement() };
+            },
+            getEntry: function (id) {},
+          },
+        },
       }
-    }) {
-
-      return '';
+    ) {
+      return "";
     },
-    watch: function (data, newValue, oldValue, $this = {
-      getElement: function (id) { return new FormElement() },
-      getEntry: function (id) { return null; },
-      onChange: function () { },
-      formInfo: {
-        vm: {
-          getElement: function (id) { return { model: new FormElement() } },
-          getEntry: function (id) { },
-        }
-      }
-    }, isFirst) { },
+    watch: function (
+      data,
+      newValue,
+      oldValue,
+      $this = {
+        getElement: function (id) {
+          return new FormElement();
+        },
+        getEntry: function (id) {
+          return null;
+        },
+        onChange: function () {},
+        formInfo: {
+          vm: {
+            getElement: function (id) {
+              return { model: new FormElement() };
+            },
+            getEntry: function (id) {},
+          },
+        },
+      },
+      isFirst
+    ) {},
     direction: FormDirectionType.horizontal,
     options: null,
-    ...BaseWidgetDefaultParams()
+    ...BaseWidgetDefaultParams(),
   };
 };
 
 export var FormElementType = {
   text: "text", // Default. Defines a single-line text field
   checkbox: "checkbox", // checkbox
+  location: "location", // location lat lng
   select: "select", // select from combobox
   number: "number", // input số
   file: "file", // input số
@@ -90,16 +107,13 @@ export var FormElementType = {
 };
 export var FormDirectionType = {
   vertical: "vertical",
-  horizontal: "horizontal"
+  horizontal: "horizontal",
 };
 export class FormElement extends BaseWidget {
   /** @type {String} - nhãn input */
   label;
   /** @type {String} - nhãn input */
   class;
-
-
-
 
   /** @type {String} - loại input */
   type;
@@ -141,10 +155,9 @@ export class FormElement extends BaseWidget {
   constructor(obj = defaultParams()) {
     super(obj);
     Object.assign(this, defaultParams(), obj);
-
   }
 
-  set(setFunction = function (e = defaultParams()) { }) {
+  set(setFunction = function (e = defaultParams()) {}) {
     let data = new FormElement(this);
     setFunction(data);
     return data;
@@ -161,7 +174,6 @@ export class FormElement extends BaseWidget {
 
 function getAllChild(results, element) {
   if (element != null) {
-
     results.push(element.id);
     if (element.child && element.child.length) {
       element.child.forEach(function (p) {

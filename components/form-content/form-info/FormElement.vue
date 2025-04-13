@@ -92,7 +92,7 @@
             v-model.lazy="elementValue"
             :disabled="disabled"
             :placeholder="model.attr.placeholder || ''"
-            :suffixIcon="model.attr.placeholder || ''"
+            :suffixIcon="model.attr.suffixIcon || ''"
           />
 
           <el-date-picker
@@ -129,6 +129,8 @@
             v-on="model.events"
           />
         </InputContainer>
+
+        <!-- <Location v-if="model.type == FormElementType.location"></Location> -->
         <!-- @blur="$emit('blur', model, formInfo)" -->
         <!-- <div>{{ model.model }}</div> -->
       </slot>

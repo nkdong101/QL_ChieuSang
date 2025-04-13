@@ -2,12 +2,12 @@
   <div class="login-container">
     <el-card class="login-card" shadow="always">
       <div class="login-header">Hệ thống Chiếu sáng</div>
-
       <el-form
         :model="form"
         ref="loginForm"
         label-position="top"
         :rules="rules"
+        @submit.native.prevent="onLogin"
       >
         <el-form-item label="Tên tài khoản" prop="username">
           <el-input
@@ -36,7 +36,7 @@
 
         <el-button
           type="primary"
-          @click="onLogin"
+          native-type="submit"
           size="small"
           class="login-btn"
           block
@@ -108,9 +108,10 @@ export default {
   },
   methods: {
     onLogin() {
+      console.log("Đăng nhập với:", this.form);
+
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          console.log("Đăng nhập với:", this.form);
           // Xử lý đăng nhập ở đây
           GetDataAPI({
             url: API.Login_User,
@@ -159,6 +160,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  backdrop-filter: blur(10px);
 
   padding: 16px;
 

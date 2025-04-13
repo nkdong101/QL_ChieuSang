@@ -2,31 +2,16 @@
   <div style="height: 100%">
     <TablePaging ref="tp" :model="tp">
       <template slot="column-header-button">
-        <el-button
-          class="icon-btn icon-btn"
-          v-if="pagePermission.add"
-          type="primary"
-          @click="Add()"
-        >
+        <el-button class="icon-btn icon-btn" type="primary" @click="Add()">
           <i class="el-icon-plus"></i
         ></el-button>
       </template>
       <template slot="column-content-button" slot-scope="{ row }">
         <div style="display: flex">
-          <el-button
-            v-if="pagePermission.edit"
-            class="icon-btn"
-            type="primary"
-            @click="Edit(row)"
-          >
+          <el-button class="icon-btn" type="primary" @click="Edit(row)">
             <i class="el-icon-edit"></i
           ></el-button>
-          <el-button
-            v-if="pagePermission.delete"
-            class="icon-btn"
-            type="danger"
-            @click="Delete(row)"
-          >
+          <el-button class="icon-btn" type="danger" @click="Delete(row)">
             <i class="el-icon-delete"></i>
           </el-button>
         </div>
@@ -46,7 +31,7 @@ import API from "~/assets/scripts/API";
 import TablePaging from "~/assets/scripts/base/TablePaging";
 import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
 import DefaultForm from "~/assets/scripts/base/DefaultForm";
-import Construction from "~/assets/scripts/objects/Construction_Unit";
+import Route_cabinet from "~/assets/scripts/objects/Route_cabinet";
 import { EventBus } from "~/assets/scripts/EventBus.js";
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import {
@@ -61,56 +46,107 @@ export default {
     return {
       isAdd: null,
       tp: new TablePaging({
-        title: "đơn vị thi công",
-        data: API.Construction_GetList,
+        title: "Tủ chiếu sáng",
+        data: API.Route_cabinet_GetList,
 
         cols: [
           new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
           new TablePagingCol({
-            title: "Mã đơn vị",
+            title: "Mã tủ",
             data: "Code",
             min_width: 130,
           }),
           new TablePagingCol({
-            title: "Tên đơn vị",
+            title: "Tên tủ",
             data: "Name",
             min_width: 200,
           }),
           new TablePagingCol({
-            title: "Email",
-            data: "Email",
+            title: "Địa chỉ lắp đặt",
+            data: "Address",
+            min_width: 200,
+          }),
+
+          new TablePagingCol({
+            title: "Hình thức đặt tủ",
+            data: "Box_Type",
             min_width: 150,
+
+            formatter: (value) => Para.Box_Type.getName(value),
           }),
           new TablePagingCol({
-            title: "Số liên hệ",
-            data: "Phone",
-            min_width: 130,
+            title: "Cách điều khiển",
+            data: "Box_Control",
+            min_width: 150,
+
+            formatter: (value) => Para.Box_Control.getName(value),
           }),
           new TablePagingCol({
-            title: "Người liên hệ",
-            data: "Person",
-            min_width: 130,
+            title: "Móng tủ (D x R x C)",
+            data: "Cabinet_D",
+            min_width: 150,
+
+            formatter: (value, row) => {
+              return `${row.Cabinet_D} x ${row.Cabinet_R} x ${row.Cabinet_C}`;
+            },
+          }),
+          new TablePagingCol({
+            title: "Số nhánh cáp",
+            data: "Cable_branch",
+            min_width: 150,
+            formatter: "number",
+            align: "left",
+          }),
+          new TablePagingCol({
+            title: "Nhóm tủ",
+            data: "Lighting_Group_Id",
+            min_width: 150,
+            formatter: "number",
+            align: "left",
+          }),
+          new TablePagingCol({
+            title: "Số nhánh cáp",
+            data: "Construction_id",
+            min_width: 150,
+            formatter: "number",
+            align: "left",
+          }),
+          new TablePagingCol({
+            title: "Ngày thi công",
+            data: "DateActive",
+            min_width: 150,
+            formatter: "date",
+          }),
+          new TablePagingCol({
+            title: "Ngày hết bảo hành",
+            data: "Date_Warranty",
+            min_width: 150,
+            formatter: "date",
+          }),
+          new TablePagingCol({
+            title: "Mã dự án",
+            data: "Project_Code",
+            min_width: 150,
           }),
           new TablePagingCol({
             title: "Mô tả",
             data: "Description",
-            min_width: 150,
-            width: "auto",
+            min_width: 250,
           }),
-
           new TablePagingCol({
             title: "",
             data: "button",
             min_width: 100,
             sortable: false,
+            fix: "right",
           }),
         ],
       }),
       form: new DefaultForm({
-        obj: new Construction(),
+        obj: new Route_cabinet(),
         title: "",
         visible: false,
-        width: "500px",
+        width: "1100px",
         ShowForm: (title, isAdd, obj) => {
           this.isAdd = isAdd;
           var _app = this;
@@ -123,7 +159,7 @@ export default {
           //   }
           // }
           this.form.title = title;
-          this.form.obj = new Construction(obj);
+          this.form.obj = new Route_cabinet(obj);
           this.form.visible = true;
         },
         Save: () => {
@@ -137,10 +173,10 @@ export default {
       this.$refs.tp.LoadData(true);
     },
     Add() {
-      this.form.ShowForm("Thêm đơn vị thi công", true);
+      this.form.ShowForm("Thêm tủ chiếu sáng", true);
     },
     Edit(row) {
-      this.form.ShowForm("Sửa đơn vị thi công", false, row);
+      this.form.ShowForm("Sửa tủ chiếu sáng", false, row);
     },
     Delete(row) {
       ShowConfirm({
@@ -151,7 +187,7 @@ export default {
         .then(() => {
           GetDataAPI({
             method: "post",
-            url: API.Construction_Delete,
+            url: API.Route_cabinet_Delete,
             params: row,
             action: (re) => {
               if (re == "OK") {
@@ -175,8 +211,8 @@ export default {
           return;
         } else {
           let api = this.form.obj.Id
-            ? API.Construction_Edit
-            : API.Construction_Add;
+            ? API.Route_cabinet_Edit
+            : API.Route_cabinet_Add;
           GetDataAPI({
             method: "post",
             url: api,

@@ -68,44 +68,25 @@ export var Para = {
       { Id: 2, Name: "Offline" },
     ],
   }),
-  InventoryState: new SelectOption({
-    data: [
-      { Id: 1, Name: "Request" },
-      { Id: 2, Name: "Submitted" },
-      { Id: 3, Name: "Approved" },
-    ],
-  }),
-  Para_ProjectCode_Type: new SelectOption({
-    data: [
-      { Id: 1, Name: "Award" },
-      { Id: 2, Name: "Task" },
-    ],
-  }),
-  dm_department: new SelectOption({
+  dm_County: new SelectOption({
     data: [],
   }),
-  TicketsState: new SelectOption({
+  dm_Construction_Unit: new SelectOption({
+    data: [],
+  }),
+  dm_Lighting_Group: new SelectOption({
+    data: [],
+  }),
+  Box_Type: new SelectOption({
     data: [
-      { Id: 1, Name: "Mới" },
-      { Id: 2, Name: "Duyệt" },
-      { Id: 3, Name: "Đang thực thi" },
-      { Id: 4, Name: "Kết thúc" },
-      { Id: 5, Name: "Hủy" },
-      { Id: 6, Name: "Từ chối" },
-      { Id: 7, Name: "Thành công" },
+      { Id: 1, Name: "Treo" },
+      { Id: 2, Name: "Đặt" },
     ],
   }),
-  TransferType: new SelectOption({
+  Box_Control: new SelectOption({
     data: [
-      // { Id: 1, Name: "Người" },
-      { Id: 2, Name: "Kho" },
-      { Id: 3, Name: "Phòng làm việc" },
-      { Id: 4, Name: "Sảnh" },
-      { Id: 5, Name: "Hành lang" },
-      { Id: 6, Name: "Phòng nghỉ" },
-      { Id: 7, Name: "WC" },
-      { Id: 8, Name: "Phòng khác" },
-      // { Id: 4, Name: "Đối tác" },
+      { Id: 1, Name: "Tủ điều khiển từ trung tâm" },
+      { Id: 2, Name: "Tủ chỉ điều khiển trực tiếp" },
     ],
   }),
   TransferState: new SelectOption({
