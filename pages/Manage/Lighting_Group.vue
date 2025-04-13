@@ -67,7 +67,7 @@ export default {
         cols: [
           new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
           new TablePagingCol({
-            title: "Mã tuyến",
+            title: "Mã nhóm",
             data: "Code",
             min_width: 130,
           }),

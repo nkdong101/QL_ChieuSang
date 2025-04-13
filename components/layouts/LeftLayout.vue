@@ -1,7 +1,7 @@
 <template>
   <div class="ll-main">
     <div class="menu-Logo">
-      <img src="/Image/iconWebManageNau.png" alt="" />
+      <img src="/images/logo.png" alt="" />
     </div>
     <!-- .slice(0, amountItem) -->
     <el-scrollbar ref="scrl" wrap-class="scrollbar-wrapper" style="flex: 1">
@@ -124,7 +124,8 @@ export default {
   .menu-Logo {
     display: flex;
     justify-content: center;
-
+    // background: #fff;
+    margin-bottom: 5px;
     height: 45px;
     img {
       height: 100%;

@@ -146,7 +146,7 @@ export default {
         obj: new Route_cabinet(),
         title: "",
         visible: false,
-        width: "1100px",
+        width: "900px",
         ShowForm: (title, isAdd, obj) => {
           this.isAdd = isAdd;
           var _app = this;

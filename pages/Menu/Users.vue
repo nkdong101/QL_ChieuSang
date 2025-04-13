@@ -11,6 +11,7 @@
           <i class="el-icon-plus"></i
         ></el-button>
       </template>
+
       <template slot="column-content-button" slot-scope="{ row }">
         <div style="display: flex">
           <el-button
@@ -46,7 +47,7 @@ import API from "~/assets/scripts/API";
 import TablePaging from "~/assets/scripts/base/TablePaging";
 import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
 import DefaultForm from "~/assets/scripts/base/DefaultForm";
-import Route_Point from "~/assets/scripts/objects/Route_Point";
+import User from "~/assets/scripts/objects/User";
 import { EventBus } from "~/assets/scripts/EventBus.js";
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import {
@@ -55,47 +56,63 @@ import {
   ShowMessage,
 } from "~/assets/scripts/Functions";
 import { Para } from "~/assets/scripts/Para";
-import APIHelper from "~/assets/scripts/API/APIHelper";
 export default {
   data() {
     return {
       isAdd: null,
       tp: new TablePaging({
-        title: "Điểm sáng (Cột đèn)",
-        data: API.Route_Point_GetList,
+        title: "Tiêu đề",
+        data: API.Account_GetList,
+
+        disableSelectRow: true,
 
         cols: [
-          new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
-          new TablePagingCol({ title: "Mã", data: "Code", min_width: 100 }),
+          new TablePagingCol({ title: "STT", data: "SttTP", min_width: 65 }),
           new TablePagingCol({
-            title: "Cao",
-            data: "Height",
-            min_width: 120,
+            title: "Id",
+            data: "Id",
+            min_width: 150,
           }),
           new TablePagingCol({
-            title: "Loại cột",
-            data: "Column_Type_id",
+            title: "Họ tên",
+            data: "Name",
+            min_width: 200,
+          }),
+          new TablePagingCol({
+            title: "Đội quản lý",
+            data: "Management_team_id",
+            min_width: 120,
+            formatter: (value) => Para.dm_Management_team.getName(value),
+          }),
+          new TablePagingCol({
+            title: "Ngày sinh",
+            data: "Birthday",
+            min_width: 120,
+            formatter: "date",
+            width: "auto",
+          }),
+
+          new TablePagingCol({
+            title: "Số điện thoại",
+            data: "Phone",
             min_width: 150,
           }),
           new TablePagingCol({
             title: "Địa chỉ",
             data: "Address",
+            min_width: 250,
+          }),
+          new TablePagingCol({
+            title: "Email",
+            data: "Email",
             min_width: 120,
-            width: "auto",
           }),
 
-          // new TablePagingCol({
-          //   title: "Use",
-          //   data: "Use",
-          //   min_width: 120,
-          //   formatter: (value) => Para.Para_Active.getName(value),
-          // }),
-
           new TablePagingCol({
-            title: "Hãng sản xuất",
-            data: "Hangsx_id",
-            min_width: 150,
-            width: "auto",
+            title: "Trạng thái",
+            data: "Status",
+            min_width: 120,
+            formatter: (value) => Para.Para_UserStatus.getName(value),
           }),
 
           new TablePagingCol({
@@ -103,14 +120,15 @@ export default {
             data: "button",
             min_width: 100,
             sortable: false,
+            fix: "right",
           }),
         ],
       }),
       form: new DefaultForm({
-        obj: new Route_Point(),
+        obj: new User(),
         title: "",
         visible: false,
-        width: "700px",
+        width: "500px",
         ShowForm: (title, isAdd, obj) => {
           this.isAdd = isAdd;
           var _app = this;
@@ -123,7 +141,10 @@ export default {
           //   }
           // }
           this.form.title = title;
-          this.form.obj = new Route_Point(obj);
+          this.form.obj = new User({
+            ...obj,
+            isEdit: !isAdd,
+          });
           this.form.visible = true;
         },
         Save: () => {
@@ -132,31 +153,51 @@ export default {
       }),
     };
   },
+
+  watch: {},
   methods: {
     LoadData() {
       this.$refs.tp.LoadData(true);
     },
     Add() {
-      this.form.ShowForm("Thêm điểm sáng", true);
+      this.form.ShowForm("Thêm người dùng", true);
     },
     Edit(row) {
-      this.form.ShowForm("Sửa điểm sáng", false, row);
+      this.form.ShowForm("Thêm người dùng", false, row);
     },
     Delete(row) {
       ShowConfirm({
-        message: "Xóa [" + row.Name + "]",
+        message: "Xác nhận xóa tài khoản [" + row.FullName + "]",
         title: "Xác nhận!",
         type: MessageType.warning,
       })
         .then(() => {
+          // GetDataAPI({
+          //   method: "delete",
+          //   url: API.Account + "/" + row.Id,
+          //   params: row,
+          //   action: (re) => {
+          //     if (re == "OK") {
+          //       this.LoadData();
+          //       ShowMessage("Xóa thành công");
+          //     } else {
+          //       ShowMessage(re);
+          //     }
+          //   },
+          // });
+          let obj = { ...row };
+          obj.UserStatus = 3;
+          // console.log(obj);
+          // return;
           GetDataAPI({
-            method: "post",
-            url: API.Route_Point_Delete,
-            params: row,
+            method: "put",
+            url: API.Account + "/" + obj.Id,
+            params: obj,
             action: (re) => {
-              if (re == "OK") {
+              if (re == "OK" || Number.isInteger(+re)) {
                 this.LoadData();
-                ShowMessage("Xóa thành công");
+                this.form.visible = false;
+                ShowMessage("Lưu thành công");
               } else {
                 ShowMessage(re);
               }
@@ -174,17 +215,20 @@ export default {
           ShowMessage("Vui lòng nhập đầy đủ thông tin!", MessageType.error);
           return;
         } else {
-          let api = this.form.obj.Id
-            ? API.Route_Point_Edit
-            : API.Route_Point_Add;
           GetDataAPI({
-            method: "post",
-            url: api,
+            method: this.isAdd ? "post" : "put",
+            url: this.isAdd
+              ? API.Account
+              : API.Account + "/" + this.form.obj.Id,
             params: this.form.obj.toJSON(),
-            action: function (re) {
-              _app.LoadData();
-              _app.form.visible = false;
-              ShowMessage("Lưu thành công");
+            action: (re) => {
+              if (re == "OK" || Number.isInteger(+re)) {
+                this.LoadData();
+                this.form.visible = false;
+                ShowMessage("Lưu thành công");
+              } else {
+                ShowMessage(re);
+              }
             },
           });
         }
@@ -193,7 +237,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.pagePermission);
+    // console.log(this.pagePermission);
   },
 };
 </script>

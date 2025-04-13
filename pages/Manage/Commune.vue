@@ -2,16 +2,31 @@
   <div style="height: 100%">
     <TablePaging ref="tp" :model="tp">
       <template slot="column-header-button">
-        <el-button class="icon-btn icon-btn" type="primary" @click="Add()">
+        <el-button
+          class="icon-btn icon-btn"
+          v-if="pagePermission.add"
+          type="primary"
+          @click="Add()"
+        >
           <i class="el-icon-plus"></i
         ></el-button>
       </template>
       <template slot="column-content-button" slot-scope="{ row }">
         <div style="display: flex">
-          <el-button class="icon-btn" type="primary" @click="Edit(row)">
+          <el-button
+            class="icon-btn"
+            v-if="pagePermission.edit"
+            type="primary"
+            @click="Edit(row)"
+          >
             <i class="el-icon-edit"></i
           ></el-button>
-          <el-button class="icon-btn" type="danger" @click="Delete(row)">
+          <el-button
+            class="icon-btn"
+            v-if="pagePermission.delete"
+            type="danger"
+            @click="Delete(row)"
+          >
             <i class="el-icon-delete"></i>
           </el-button>
         </div>
@@ -101,6 +116,7 @@ export default {
           // }
           this.form.title = title;
           this.form.obj = new Commune(obj);
+          console.log(this.form.obj);
           this.form.visible = true;
         },
         Save: () => {

@@ -119,6 +119,12 @@
             placeholder="dd/MM/YYYY HH:mm"
           ></el-date-picker>
 
+          <Location
+            v-else-if="IsLocation()"
+            :id="model.id"
+            ref="entry"
+            v-model.lazy="elementValue"
+          ></Location>
           <el-input
             v-else
             :id="model.id"
@@ -282,6 +288,7 @@ import {
   resolve,
   resolveSet,
 } from "~/assets/scripts/Functions";
+import Location from "../Location.vue";
 
 export default {
   props: {
@@ -291,6 +298,10 @@ export default {
   },
   data() {
     return {
+      testvalu: {
+        Lat: 10.762622,
+        Lng: 106.660172,
+      },
       elementValue: "",
       isLoaded: true,
       validateStr: "",
@@ -322,6 +333,10 @@ export default {
     },
     IsDateTimePicker() {
       return this.model.type == FormElementType.dateTimePicker;
+    },
+    IsLocation() {
+      // console.log(this)
+      return this.model.type == FormElementType.location;
     },
     IsFile() {
       return this.model.type == FormElementType.file;

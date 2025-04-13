@@ -48,15 +48,9 @@ export default class Commune {
       model: "Name",
       type: FormElementType.text,
     }),
-    Location_lng: new FormElement({
-      label: "Kinh độ",
-      model: "Location.Lng",
-      type: FormElementType.text,
-    }),
-    Location_lat: new FormElement({
-      label: "Vĩ độ",
-      model: "Location.Lat",
-      type: FormElementType.text,
+    Location: new FormElement({
+      model: "Location",
+      type: FormElementType.location,
     }),
   };
 
@@ -92,12 +86,7 @@ export default class Commune {
         this._formElements.Code,
         this._formElements.Name,
         this._formElements.Description,
-        new FormElement({
-          child: [
-            this._formElements.Location_lat,
-            this._formElements.Location_lng,
-          ],
-        }),
+        this._formElements.Location,
         // this._formElements.Use,
       ],
     });

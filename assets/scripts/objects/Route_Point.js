@@ -42,7 +42,7 @@ export default class dm_Lighting_Group {
       type: FormElementType.text,
     }),
     Height: new FormElement({
-      label: "Cao",
+      label: "Chiều cao",
       model: "Height",
       type: FormElementType.number,
     }),
@@ -50,21 +50,18 @@ export default class dm_Lighting_Group {
       label: "Hãng sản xuất",
       model: "Hangsx_id",
       type: FormElementType.select,
+      options: Para.dm_Hangsx,
     }),
     Column_Type_id: new FormElement({
       label: "Loại cột",
       model: "Column_Type_id",
       type: FormElementType.select,
+      options: Para.dm_Column_Type,
     }),
-    Location_lng: new FormElement({
-      label: "Kinh độ",
-      model: "Location.Lng",
-      type: FormElementType.text,
-    }),
-    Location_lat: new FormElement({
-      label: "Vĩ độ",
-      model: "Location.Lat",
-      type: FormElementType.text,
+    Location: new FormElement({
+      model: "Location",
+      type: FormElementType.location,
+      // options: Para.dm_Column_Type,
     }),
     Id: new FormElement({
       label: "Id",
@@ -81,6 +78,7 @@ export default class dm_Lighting_Group {
       model: "DateCreate",
       type: FormElementType.text,
     }),
+
     UserCreate: new FormElement({
       label: "UserCreate",
       model: "UserCreate",
@@ -126,12 +124,15 @@ export default class dm_Lighting_Group {
             this._formElements.Column_Type_id,
           ],
         }),
-        new FormElement({
-          child: [
-            this._formElements.Location_lat,
-            this._formElements.Location_lng,
-          ],
-        }),
+        this._formElements.Address,
+        this._formElements.Location,
+
+        // new FormElement({
+        //   child: [
+        //     this._formElements.Location_lat,
+        //     this._formElements.Location_lng,
+        //   ],
+        // }),
 
         // this._formElements.Use,
       ],

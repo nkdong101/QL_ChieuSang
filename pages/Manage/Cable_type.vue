@@ -46,7 +46,7 @@ import API from "~/assets/scripts/API";
 import TablePaging from "~/assets/scripts/base/TablePaging";
 import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
 import DefaultForm from "~/assets/scripts/base/DefaultForm";
-import Cable_type from "~/assets/scripts/objects/BubType";
+import Cable_type from "~/assets/scripts/objects/Cable_type";
 
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import {
@@ -78,7 +78,7 @@ export default {
           }),
           new TablePagingCol({
             title: "Mô tả",
-            data: "Description",
+            data: "Decription",
             min_width: 150,
             width: "auto",
           }),

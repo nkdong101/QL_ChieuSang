@@ -84,10 +84,9 @@ export default class Route_cabinet {
       model: "Location.Lng",
       type: FormElementType.text,
     }),
-    Location_lat: new FormElement({
-      label: "Vĩ độ",
-      model: "Location.Lat",
-      type: FormElementType.text,
+    Location: new FormElement({
+      model: "Location",
+      type: FormElementType.location,
     }),
     Box_Type: new FormElement({
       label: "Hình thức đặt",
@@ -132,7 +131,7 @@ export default class Route_cabinet {
     Cable_branch: new FormElement({
       label: "Số lượng nhánh cáp",
       model: "Cable_branch",
-      labelWidth: 180,
+      labelWidth: 160,
       type: FormElementType.number,
       col: 15,
       // options: Para.Box_Control,
@@ -230,23 +229,18 @@ export default class Route_cabinet {
           child: [
             this._formElements.Lighting_Group_Id,
             this._formElements.Construction_id,
+            this._formElements.Project_Code,
           ],
         }),
         new FormElement({
           child: [
             this._formElements.DateActive,
             this._formElements.Date_Warranty,
-            this._formElements.Project_Code,
           ],
         }),
         this._formElements.Description,
         // this._formElements.Use,
-        new FormElement({
-          child: [
-            this._formElements.Location_lat,
-            this._formElements.Location_lng,
-          ],
-        }),
+        this._formElements.Location,
       ],
     });
   }

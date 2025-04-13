@@ -1,50 +1,51 @@
 <template>
-  <!-- <div style="display: flex; justify-content: center">
-      <div v-for="item in UserPermission" :key="item.Id">
-        <el-button @click="ProcessUserPermission(item)">
-          {{ item.Name }}
-        </el-button>
-      </div>
-    </div>
-    Chức vụ hiện tại: {{ permission }} -->
-  <!-- <div>
-    <nuxt-link :to="switchLocalePath('en')">English</nuxt-link>
-    <nuxt-link :to="switchLocalePath('vi')">Tiếng Việt</nuxt-link>
-
-    {{ $t('welcome') }}
-    {{ $t('xxx') }}
-  </div> -->
-  <!-- <pre>
-    {{ $store.state.menu }}
-  </pre> -->
-
-  <div style="height: 100%">
-    <!-- <ReportDashboard /> -->
-    <p>dashboard</p>
+  <div>
+    <input
+      type="text"
+      ref="autocompleteInput"
+      placeholder="Enter address"
+      class="autocomplete-input"
+    />
   </div>
 </template>
 
 <script>
-import GetDataAPI from "~/assets/scripts/GetDataAPI";
-import StoreManager from "~/assets/scripts/StoreManager";
 export default {
-  data() {
-    return {
-      data_report: [],
-    };
-  },
-
-  computed: {
-    user_level() {
-      return StoreManager.GetUserLevel();
-    },
-  },
-  methods: {},
+  name: "AddressAutocomplete",
   mounted() {
-    // console.log(this)
-    // this.$router.push('/PRList/ForOffice')
+    // Wait until Google Maps is loaded
+    if (window.google) {
+      const autocomplete = new window.google.maps.places.Autocomplete(
+        this.$refs.autocompleteInput,
+        {
+          types: ["geocode"], // or ['address']
+          componentRestrictions: { country: "vn" }, // optional
+        }
+      );
+
+      autocomplete.addListener("place_changed", () => {
+        const place = autocomplete.getPlace();
+        console.log("Selected place:", place);
+        // You can emit or set data here
+      });
+    }
   },
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.autocomplete-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.autocomplete-input:focus {
+  border-color: #4f46e5; /* Indigo-600 (like Tailwind) */
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+</style>

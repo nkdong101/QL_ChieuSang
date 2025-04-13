@@ -46,7 +46,7 @@ import API from "~/assets/scripts/API";
 import TablePaging from "~/assets/scripts/base/TablePaging";
 import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
 import DefaultForm from "~/assets/scripts/base/DefaultForm";
-import Material_Group from "~/assets/scripts/objects/BubType";
+import Material_Group from "~/assets/scripts/objects/MaterialGroup";
 
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import {
@@ -61,18 +61,18 @@ export default {
     return {
       isAdd: null,
       tp: new TablePaging({
-        title: "loại đèn",
+        title: "Nhóm vật tư",
         data: API.Material_Group_GetList,
 
         cols: [
           new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
           new TablePagingCol({
-            title: "Mã loại",
+            title: "Mã vật",
             data: "Code",
             min_width: 150,
           }),
           new TablePagingCol({
-            title: "Tên loại cáp",
+            title: "Tên vật tư",
             data: "Name",
             min_width: 200,
           }),

@@ -10,17 +10,19 @@ export default class User {
   /** @type {string} - description */
   Id;
   /** @type {string} - description */
-  FullName;
+  Password;
+  /** @type {string} - description */
+  Name;
   /** @type {string} - description */
   Email;
   /** @type {string} - description */
-  Title;
+  Phone;
   /** @type {number} - description */
-  Office_id;
+  Management_team_id;
   /** @type {string} - description */
-  UserLevel_id;
+  Address;
   /** @type {number} - description */
-  Country_id;
+  Birthday;
   /** @type {number} - description */
   UserStatus;
   /** @type {string} - description */
@@ -40,7 +42,7 @@ export default class User {
     }),
     FullName: new FormElement({
       label: "Họ tên",
-      model: "FullName",
+      model: "Name",
       type: FormElementType.text,
     }),
     Email: new FormElement({
@@ -48,37 +50,37 @@ export default class User {
       model: "Email",
       type: FormElementType.text,
     }),
-    Title: new FormElement({
-      label: "Chức vụ",
-      model: "Title",
+    Phone: new FormElement({
+      label: "Số điện thoại",
+      model: "Phone",
       type: FormElementType.text,
     }),
-    Office_id: new FormElement({
-      label: "Văn phòng",
-      model: "Office_id",
+    Management_team_id: new FormElement({
+      label: "Đội quản lý",
+      model: "Management_team_id",
       type: FormElementType.select,
       options: Para.Para_Office,
     }),
-    UserLevel_id: new FormElement({
-      label: "Cấp độ",
-      model: "UserLevel_id",
+    Address: new FormElement({
+      label: "Địa chỉ",
+      model: "Address",
       type: FormElementType.select,
       options: Para.GroupPermission,
     }),
-    Country_id: new FormElement({
-      label: "Quốc gia",
-      model: "Country_id",
-      type: FormElementType.text,
+    Birthday: new FormElement({
+      label: "Ngày sinh",
+      model: "Birthday",
+      type: FormElementType.datePicker,
     }),
-    UserStatus: new FormElement({
+    Status: new FormElement({
       label: "Trạng thái",
-      model: "UserStatus",
+      model: "Status",
       type: FormElementType.select,
-      options: Para.Para_Use,
+      options: Para.Para_UserStatus,
     }),
-    SignatureImage: new FormElement({
-      label: "SignatureImage",
-      model: "SignatureImage",
+    Avatar: new FormElement({
+      label: "Ảnh",
+      model: "Avatar",
       type: FormElementType.text,
     }),
     Buttons: new FormElement({
@@ -120,12 +122,14 @@ export default class User {
         this._formElements.Id,
         this._formElements.FullName,
         this._formElements.Email,
-        this._formElements.Title,
-        this._formElements.Office_id,
-        this._formElements.UserLevel_id,
+        new FormElement({
+          child: [this._formElements.Phone, this._formElements.Birthday],
+        }),
+        this._formElements.Address,
+        this._formElements.Management_team_id,
         // this._formElements.Country_id,
-        this._formElements.UserStatus,
-        this._formElements.Name_Excel,
+        this._formElements.Status,
+        // this._formElements.Name_Excel,
       ],
     });
   }

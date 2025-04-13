@@ -13,7 +13,7 @@ export default class Cable_type {
   /** @type {string} - description */
   Name;
   /** @type {string} - description */
-  Description;
+  Decription;
 
   /** @type {number} - description */
   Id;
@@ -29,7 +29,7 @@ export default class Cable_type {
   _formElements = {
     Description: new FormElement({
       label: "Mô tả",
-      model: "Description",
+      model: "Decription",
       type: FormElementType.text,
       attr: {
         type: "textarea",

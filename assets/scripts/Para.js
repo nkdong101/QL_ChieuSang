@@ -89,26 +89,15 @@ export var Para = {
       { Id: 2, Name: "Tủ chỉ điều khiển trực tiếp" },
     ],
   }),
-  TransferState: new SelectOption({
-    data: [
-      // { Id: 0, Name: "Không xác định" },
-      { Id: 1, Name: "Chờ duyệt" },
-      { Id: 2, Name: "Đã duyệt" },
-      { Id: 3, Name: "Không duyệt" },
-      { Id: 4, Name: "Từ chối" },
-      { Id: 5, Name: "Thành công" },
-    ],
+  dm_Hangsx: new SelectOption({
+    data: [],
   }),
 
-  TransferRecivedState: new SelectOption({
-    data: [
-      // { Id: 0, Name: "Không xác định" },
-
-      { Id: 2, Name: "Phiếu chờ nhận" },
-
-      { Id: 4, Name: "Phiếu từ chối nhận" },
-      { Id: 5, Name: "Phiếu đã nhận" },
-    ],
+  dm_Column_Type: new SelectOption({
+    data: [],
+  }),
+  dm_Management_team: new SelectOption({
+    data: [],
   }),
   StoreType: new SelectOption({
     data: [
@@ -138,6 +127,13 @@ export var Para = {
       { Id: 1, Name: "Hoạt động" },
       { Id: 2, Name: "Không hoạt động" },
       // { Id: 3, Name: "Vô hiệu hóa" },
+    ],
+  }),
+  Para_UserStatus: new SelectOption({
+    data: [
+      { Id: 1, Name: "Đang sử dụng" },
+      { Id: 2, Name: "Đang khóa" },
+      { Id: 3, Name: "Không sử dụng" },
     ],
   }),
   SignImage: new InputFileModel({

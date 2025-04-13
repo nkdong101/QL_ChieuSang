@@ -9,6 +9,10 @@ export default {
   Login_Email: linkAPI + "Account/Login_Email",
   Login: linkAPI + "Account/Login",
   Logout: linkAPI + "Account/Logout",
+  Account_GetList: linkAPI + "Account/GetList",
+  Account_Add: linkAPI + "Account/Add",
+  Account_Edit: linkAPI + "Account/GetList",
+  Account_Delete: linkAPI + "Account/GetList",
 
   GetUserInfo: linkAPI + "Account/GetUserInfo",
   UpdateProfile: linkAPI + "Account/UpdateProfile",

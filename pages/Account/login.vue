@@ -1,7 +1,9 @@
 <template>
   <div class="login-container">
     <el-card class="login-card" shadow="always">
+      <img src="/images/viettech.jpg" height="80" alt="" />
       <div class="login-header">Hệ thống Chiếu sáng</div>
+
       <el-form
         :model="form"
         ref="loginForm"

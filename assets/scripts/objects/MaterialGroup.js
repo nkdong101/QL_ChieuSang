@@ -6,15 +6,14 @@ import {
 import { SelectOption } from "../base/SelectOption";
 import { Para } from "../Para";
 
-export default class Material_Group {
+export default class MaterialGroup {
   /** @type {string} - description */
   Code;
-
   /** @type {string} - description */
   Name;
   /** @type {string} - description */
   Description;
-
+  Parent_id;
   /** @type {number} - description */
   Id;
   /** @type {string} - description */
@@ -46,18 +45,23 @@ export default class Material_Group {
       model: "Name",
       type: FormElementType.text,
     }),
+    Parent_id: new FormElement({
+      label: "Nhóm sản phẩm cấp trên",
+      model: "Parent_id",
+      type: FormElementType.text,
+    }),
   };
 
   /**
    *
-   * @param {Material_Group} obj
+   * @param {MaterialGroup} obj
    */
   constructor(obj) {
     this.update(obj);
   }
   /**
    *
-   * @param {Material_Group} obj
+   * @param {MaterialGroup} obj
    */
   update(obj) {
     Object.assign(this, obj);

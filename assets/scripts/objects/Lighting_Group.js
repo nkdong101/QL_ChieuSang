@@ -37,7 +37,7 @@ export default class dm_Lighting_Group {
       },
     }),
     Code: new FormElement({
-      label: "Mã tuyến",
+      label: "Mã nhóm",
       model: "Code",
       type: FormElementType.text,
     }),

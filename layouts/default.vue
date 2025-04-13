@@ -115,6 +115,24 @@ export default {
             },
           });
         });
+        let hangsx = new Promise((rs) => {
+          GetDataAPI({
+            url: API.Hangsx_GetList,
+            action: (re) => {
+              Para.dm_Hangsx.data = re;
+              rs();
+            },
+          });
+        });
+        let dm_coulumn = new Promise((rs) => {
+          GetDataAPI({
+            url: API.Column_type_GetList,
+            action: (re) => {
+              Para.dm_Column_Type.data = re;
+              rs();
+            },
+          });
+        });
 
         // let account = new Promise((rs) => {
         //   GetDataAPI({
@@ -129,11 +147,15 @@ export default {
         //     },
         //   });
         // });
-        Promise.all([dm_Lighting_Group, dm_Construction_Unit, Country]).then(
-          (result) => {
-            rs();
-          }
-        );
+        Promise.all([
+          dm_Lighting_Group,
+          hangsx,
+          dm_Construction_Unit,
+          dm_coulumn,
+          Country,
+        ]).then((result) => {
+          rs();
+        });
       });
     },
     InitStuff() {

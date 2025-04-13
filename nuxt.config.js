@@ -42,6 +42,9 @@ export default {
       { src: "/scripts/quill-editor/highlight.min.js" },
       { src: "/scripts/quill-editor/quill.min.js" },
       { src: "/scripts/quill-editor/image-resize.min.js" },
+      {
+        src: "https://maps.googleapis.com/maps/api/js?key=AIzaSyA27Sthxj_Y5mbC2A4XpxUWHa7hn84NO1k&libraries=places",
+      },
     ],
   },
 
