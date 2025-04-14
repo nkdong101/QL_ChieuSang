@@ -104,14 +104,14 @@ export default {
             title: "Nhóm tủ",
             data: "Lighting_Group_Id",
             min_width: 150,
-            formatter: "number",
-            align: "left",
+            formatter: (value) => Para.dm_Lighting_Group.getName(value),
+            // align: "left",
           }),
           new TablePagingCol({
-            title: "Số nhánh cáp",
+            title: "Đơn vị thi công",
             data: "Construction_id",
             min_width: 150,
-            formatter: "number",
+            formatter: (value) => Para.dm_Construction_Unit.getName(value),
             align: "left",
           }),
           new TablePagingCol({

@@ -143,19 +143,19 @@ export default {
           });
         });
 
-        // let account = new Promise((rs) => {
-        //   GetDataAPI({
-        //     url: API.Account,
-        //     action: (re) => {
-        //       Para.Para_Account.data = re.filter((p) => p.UserStatus == 1);
-        //       // Para.Para_Account_purchasing.data = re.filter(
-        //       //     (p) => p.UserLevel_id == "2"
-        //       // );
-        //       console.log(Para.Para_Account.data);
-        //       rs();
-        //     },
-        //   });
-        // });
+        let account = new Promise((rs) => {
+          GetDataAPI({
+            url: API.Account_GetList,
+            action: (re) => {
+              Para.Para_Account.data = re;
+              // Para.Para_Account_purchasing.data = re.filter(
+              //     (p) => p.UserLevel_id == "2"
+              // );
+              // console.log(Para.Para_Account.data);
+              rs();
+            },
+          });
+        });
         Promise.all([
           dm_Lighting_Group,
           hangsx,
@@ -163,6 +163,7 @@ export default {
           dm_coulumn,
           Country,
           dm_Managem,
+          account,
         ]).then((result) => {
           rs();
         });

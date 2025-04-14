@@ -228,7 +228,7 @@ export default class Route_cabinet {
                   direction: FormDirectionType.horizontal,
                   child: [
                     new FormElement({
-                      label: "Móng tủ (D x R x C) m",
+                      label: "Móng tủ (D x R x C) cm",
                       type: "label",
                       // col: 5,
                     }),
