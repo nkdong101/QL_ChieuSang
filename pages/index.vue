@@ -1,13 +1,13 @@
 <template>
   <div style="height: 100%">
-    <el-input
+    <!-- <el-input
       ref="autocompleteInput"
       id="autocomplete"
       v-model="address"
       placeholder="Enter an address"
       @keydown.enter.native.prevent="handleEnter"
-    />
-    <TablePaging ref="tp" style="height: 600px" :model="tp"> </TablePaging>
+    /> -->
+    <!-- <TablePaging ref="tp" style="height: 600px" :model="tp"> </TablePaging>
     <el-table
       ref="table1"
       :data="tableData1"
@@ -21,7 +21,7 @@
       </el-table-column>
       <el-table-column prop="name" label="Name" sortable width="180">
       </el-table-column>
-    </el-table>
+    </el-table> -->
   </div>
 </template>
 
