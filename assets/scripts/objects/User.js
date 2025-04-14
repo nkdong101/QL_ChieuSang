@@ -59,7 +59,7 @@ export default class User {
       label: "Đội quản lý",
       model: "Management_team_id",
       type: FormElementType.select,
-      options: Para.Para_Office,
+      options: Para.dm_Management_team,
     }),
     Address: new FormElement({
       label: "Địa chỉ",

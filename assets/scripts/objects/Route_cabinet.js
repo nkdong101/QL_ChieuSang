@@ -77,7 +77,13 @@ export default class Route_cabinet {
     Address: new FormElement({
       label: "Địa chỉ lắp",
       model: "Address",
-      type: FormElementType.text,
+      type: FormElementType.address,
+      watch(data, n, o, t, iF) {
+        if (!iF) {
+          // console.log("dataAddress", data.Address);
+          // console.log("dataLocation", data.Location);
+        }
+      },
     }),
     Location_lng: new FormElement({
       label: "Kinh độ",
@@ -108,11 +114,11 @@ export default class Route_cabinet {
       attr: {
         placeholder: "Dài",
       },
-      col: 3,
+      // col: 3,
     }),
     Cabinet_R: new FormElement({
       model: "Cabinet_R",
-      col: 3,
+      // col: 3,
       type: FormElementType.number,
       attr: {
         placeholder: "Rộng",
@@ -122,7 +128,7 @@ export default class Route_cabinet {
     Cabinet_C: new FormElement({
       // label: "	Chiều cao",
       model: "Cabinet_C",
-      col: 3,
+      // col: 3,
       type: FormElementType.number,
       attr: {
         placeholder: "Cao",
@@ -133,7 +139,7 @@ export default class Route_cabinet {
       model: "Cable_branch",
       labelWidth: 160,
       type: FormElementType.number,
-      col: 15,
+      // col: 15,
       // options: Para.Box_Control,
     }),
     Lighting_Group_Id: new FormElement({
@@ -160,8 +166,11 @@ export default class Route_cabinet {
     Date_Warranty: new FormElement({
       label: "Ngày hết bảo hành",
       model: "Date_Warranty",
+      labelWidth: 140,
       type: FormElementType.datePicker,
-
+      attr: {
+        disabledCrDate: true,
+      },
       // options: Para.dm_Construction_Unit,
     }),
     Project_Code: new FormElement({
@@ -196,51 +205,65 @@ export default class Route_cabinet {
   form() {
     return new FormInfo({
       formData: this,
-      labelWidth: 150,
+      labelWidth: 120,
       elements: [
         new FormElement({
-          child: [this._formElements.Code, this._formElements.Name],
-        }),
-
-        this._formElements.Address,
-        new FormElement({
-          child: [
-            this._formElements.Box_Type,
-            this._formElements.Box_Control,
-            this._formElements.Cable_branch,
-          ],
-        }),
-
-        new FormElement({
-          direction: FormDirectionType.horizontal,
           child: [
             new FormElement({
-              label: "Móng tủ (D x R x C) m",
-              type: "label",
-              col: 5,
-            }),
-            this._formElements.Cabinet_D,
-            this._formElements.Cabinet_R,
-            this._formElements.Cabinet_C,
-          ],
-        }),
+              direction: FormDirectionType.vertical,
+              child: [
+                new FormElement({
+                  child: [this._formElements.Code, this._formElements.Name],
+                }),
 
-        new FormElement({
-          child: [
-            this._formElements.Lighting_Group_Id,
-            this._formElements.Construction_id,
-            this._formElements.Project_Code,
+                this._formElements.Address,
+                // new FormElement({
+                //   child: [
+                this._formElements.Box_Type,
+                this._formElements.Box_Control,
+                //   ],
+                // }),
+
+                new FormElement({
+                  direction: FormDirectionType.horizontal,
+                  child: [
+                    new FormElement({
+                      label: "Móng tủ (D x R x C) m",
+                      type: "label",
+                      // col: 5,
+                    }),
+                    this._formElements.Cabinet_D,
+                    this._formElements.Cabinet_R,
+                    this._formElements.Cabinet_C,
+                  ],
+                }),
+
+                new FormElement({
+                  direction: FormDirectionType.horizontal,
+                  child: [
+                    this._formElements.Project_Code,
+                    this._formElements.Cable_branch,
+                  ],
+                }),
+                new FormElement({
+                  child: [
+                    this._formElements.Lighting_Group_Id,
+                    this._formElements.Construction_id,
+                  ],
+                }),
+                new FormElement({
+                  child: [
+                    this._formElements.DateActive,
+                    this._formElements.Date_Warranty,
+                  ],
+                }),
+                this._formElements.Description,
+              ],
+            }),
+            this._formElements.Location,
           ],
         }),
-        new FormElement({
-          child: [
-            this._formElements.DateActive,
-            this._formElements.Date_Warranty,
-          ],
-        }),
-        this._formElements.Description,
         // this._formElements.Use,
-        this._formElements.Location,
       ],
     });
   }

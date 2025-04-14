@@ -308,8 +308,8 @@ export var Para = {
   }),
   Para_Account: new SelectOption({
     data: [],
-    placeholder: "Chưa được chọn",
-    label: "FullName",
+    placeholder: "",
+    // label: "FullName",
   }),
   Para_Account_purchasing: new SelectOption({
     data: [],

@@ -133,6 +133,15 @@ export default {
             },
           });
         });
+        let dm_Managem = new Promise((rs) => {
+          GetDataAPI({
+            url: API.Management_team_GetList,
+            action: (re) => {
+              Para.dm_Management_team.data = re;
+              rs();
+            },
+          });
+        });
 
         // let account = new Promise((rs) => {
         //   GetDataAPI({
@@ -153,6 +162,7 @@ export default {
           dm_Construction_Unit,
           dm_coulumn,
           Country,
+          dm_Managem,
         ]).then((result) => {
           rs();
         });

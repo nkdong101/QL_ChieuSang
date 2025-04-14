@@ -1,14 +1,12 @@
-import BaseWidget, {
-  BaseWidgetDefaultParams
-} from "./BaseWidget";
+import BaseWidget, { BaseWidgetDefaultParams } from "./BaseWidget";
 import TablePagingCol from "./TablePagingCol";
 import FormContainer from "./FormContainer";
 
 var defaultParams = function () {
   return {
-    title: '',
-    emptyText: '',
-    keyId: '',
+    title: "",
+    emptyText: "",
+    keyId: "Id",
     disableControl: false,
     noFilter: false,
     showHeader: true,
@@ -25,17 +23,18 @@ var defaultParams = function () {
     Validate: null,
     cols: [new TablePagingCol()].splice(0, 0),
     data: null,
-    params: '',
+    params: "",
     control: null,
     printPdf: {},
     treeprops: {},
+    // expandRowKeys: [],
     pagingShowOpt: {
       summary: true,
-      recordOfPage: true
+      recordOfPage: true,
     },
-    ...BaseWidgetDefaultParams()
+    ...BaseWidgetDefaultParams(),
   };
-}
+};
 export default class TablePaging extends BaseWidget {
   /** @type {String} - tiêu đề bảng */
   title;
@@ -94,7 +93,7 @@ export default class TablePaging extends BaseWidget {
 
   /**
    * @param {TablePaging} obj - description
-  */
+   */
   constructor(obj) {
     super(obj);
     Object.assign(this, defaultParams(), obj);

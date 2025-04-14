@@ -6,14 +6,15 @@ import {
 import { SelectOption } from "../base/SelectOption";
 import { Para } from "../Para";
 
-export default class MaterialGroup {
+export default class Management_team {
   /** @type {string} - description */
-  Code;
+  Address;
+  Manager_id;
   /** @type {string} - description */
   Name;
   /** @type {string} - description */
   Description;
-  Parent_id;
+  Routes = [];
   /** @type {number} - description */
   Id;
   /** @type {string} - description */
@@ -35,36 +36,40 @@ export default class MaterialGroup {
         rows: 2,
       },
     }),
-    Code: new FormElement({
-      label: "Mã loại",
-      model: "Code",
-      type: FormElementType.text,
+    Address: new FormElement({
+      label: "Địa chỉ",
+      model: "Address",
+      type: FormElementType.address,
     }),
     Name: new FormElement({
-      label: "Tên loại",
+      label: "Tên đội",
       model: "Name",
       type: FormElementType.text,
     }),
-    Parent_id: new FormElement({
-      label: "Nhóm sản phẩm cấp trên",
-      model: "Parent_id",
+    Manager_id: new FormElement({
+      label: "Người quản lý",
+      model: "Manager_id",
+      type: FormElementType.select,
+      options: Para.Para_Account,
+    }),
+    Routes: new FormElement({
+      label: "Tuyền đường",
+      model: "Routes",
       type: FormElementType.text,
-      isVisible(data) {
-        return data.Parent_id;
-      },
+      // options: Para.Para_Account
     }),
   };
 
   /**
    *
-   * @param {MaterialGroup} obj
+   * @param {Management_team} obj
    */
   constructor(obj) {
     this.update(obj);
   }
   /**
    *
-   * @param {MaterialGroup} obj
+   * @param {Management_team} obj
    */
   update(obj) {
     Object.assign(this, obj);
@@ -78,16 +83,17 @@ export default class MaterialGroup {
   form() {
     return new FormInfo({
       formData: this,
-      labelWidth: 100,
+      labelWidth: 120,
       elements: [
         // new FormElement({
-        //   child: [this._formElements.Code, this._formElements.Name],
+        //   child: [this._formElements.Address, this._formElements.Name],
         // }),
 
-        // this._formElements.Parent_id,
-        this._formElements.Code,
         this._formElements.Name,
+        this._formElements.Manager_id,
+        this._formElements.Address,
         this._formElements.Description,
+        this._formElements.Routes,
         // this._formElements.Use,
       ],
     });

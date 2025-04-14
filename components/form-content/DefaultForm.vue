@@ -141,6 +141,7 @@ export default {
     padding: 0;
     .form-header-c {
       background: $swatch_1;
+      font-size: 15px;
       color: white;
       padding: 0;
       display: flex;

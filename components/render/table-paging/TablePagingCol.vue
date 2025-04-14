@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     getClassName() {
-      return "tablepaging-cell";
+      return "tablepaging-cell" + (this.col.class ? " " + this.col.class : "");
     },
     rowValue({ row, column }) {
       if (!column) return "";

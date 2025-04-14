@@ -92,6 +92,7 @@ export var FormElementType = {
   text: "text", // Default. Defines a single-line text field
   checkbox: "checkbox", // checkbox
   location: "location", // location lat lng
+  address: "address",
   select: "select", // select from combobox
   number: "number", // input số
   file: "file", // input số

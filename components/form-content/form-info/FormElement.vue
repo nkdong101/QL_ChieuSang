@@ -119,6 +119,13 @@
             placeholder="dd/MM/YYYY HH:mm"
           ></el-date-picker>
 
+          <AddressAutocomplete
+            v-else-if="IsSearchAdress()"
+            :id="model.id"
+            ref="entry"
+            v-model.lazy="elementValue"
+            :propLocation="model.propLocation"
+          ></AddressAutocomplete>
           <Location
             v-else-if="IsLocation()"
             :id="model.id"
@@ -289,6 +296,7 @@ import {
   resolveSet,
 } from "~/assets/scripts/Functions";
 import Location from "../Location.vue";
+import AddressAutocomplete from "~/components/objects/AddressAutocomplete.vue";
 
 export default {
   props: {
@@ -298,10 +306,10 @@ export default {
   },
   data() {
     return {
-      testvalu: {
-        Lat: 10.762622,
-        Lng: 106.660172,
-      },
+      // testvalu: '{
+      //   Lat: 10.762622,
+      //   Lng: 106.660172,
+      // }',
       elementValue: "",
       isLoaded: true,
       validateStr: "",
@@ -337,6 +345,10 @@ export default {
     IsLocation() {
       // console.log(this)
       return this.model.type == FormElementType.location;
+    },
+    IsSearchAdress() {
+      // console.log(this)
+      return this.model.type == FormElementType.address;
     },
     IsFile() {
       return this.model.type == FormElementType.file;

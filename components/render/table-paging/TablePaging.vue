@@ -81,7 +81,12 @@
         >
         </el-link> -->
 
-        <slot  v-if="model.ExportCustome" name="ExportCustome" v-bind:tempRows="tempRows"> </slot>
+        <slot
+          v-if="model.ExportCustome"
+          name="ExportCustome"
+          v-bind:tempRows="tempRows"
+        >
+        </slot>
 
         <el-popover
           popper-class="export-popper"
@@ -158,6 +163,7 @@
         :span-method="model.spanMethod"
         :row-class-name="model.tableRowClassName"
         :tree-props="model.treeprops"
+        :expand-row-keys="model.expandRowKeys"
       >
         <template v-for="col in model.cols.filter((p) => p)">
           <TablePagingCol
@@ -271,6 +277,7 @@ export default {
   data() {
     return {
       poperExport: false,
+      // expandRowKeys: [],
       iSearchInfo: "",
       tmpData: ["Name", "xxx", "yyy"],
       isVisible: true,
@@ -321,6 +328,11 @@ export default {
         _app.isVisible = true;
       });
     },
+    // "model.expandRowKeys": function (newVal) {
+    //   console.log("newVal", newVal);
+    //   // this.expandRowKeys = newVal;
+    //   // console.log(th)
+    // },
     // "model.data": {
     //   deep: true,
     //   handler() {
@@ -1139,6 +1151,7 @@ export default {
       }
     },
   },
+
   mounted() {
     // console.log(this)
     this.LoadData();
@@ -1210,7 +1223,7 @@ export default {
   }
   ::v-deep .table-header {
     th {
-      padding: 10px 0px;
+      padding: 7px 0px;
       color: #2a4b69;
       background: #efefef;
       div.cell {
@@ -1225,7 +1238,7 @@ export default {
   }
   ::v-deep .el-table__row {
     td {
-      padding: 10px 0px;
+      padding: 5px 0px;
       cursor: pointer;
     }
   }

@@ -99,6 +99,11 @@ export default {
   Cable_type_Add: linkAPI + "Cable_type/Add",
   Cable_type_Edit: linkAPI + "Cable_type/Edit",
   Cable_type_Delete: linkAPI + "Cable_type/Delete",
+
+  Cabinet_type_GetList: linkAPI + "Cabinet_type/GetList",
+  Cabinet_type_Add: linkAPI + "Cabinet_type/Add",
+  Cabinet_type_Edit: linkAPI + "Cabinet_type/Edit",
+  Cabinet_type_Delete: linkAPI + "Cabinet_type/Delete",
 };
 
 export var ServerAPI = {

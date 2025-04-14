@@ -1,28 +1,27 @@
 // @ts-check
-import BaseWidget, {
-  BaseWidgetDefaultParams
-} from "./BaseWidget";
+import BaseWidget, { BaseWidgetDefaultParams } from "./BaseWidget";
 /**
-    *@return { TablePagingCol  } Test
-    */
+ *@return { TablePagingCol  } Test
+ */
 var defaultParams = function () {
   // @ts-ignore
   return {
     // type: '',
-    width: '',
+    width: "",
     Index: 0,
     min_width: 150,
     children: [],
+    class: "",
     sortable: true,
-    data: '',
-    title: '',
+    data: "",
+    title: "",
     fix: undefined,
-    align: 'left',
+    align: "left",
     formatter: null,
     exporter: null,
-    ...BaseWidgetDefaultParams()
+    ...BaseWidgetDefaultParams(),
   };
-}
+};
 export default class TablePagingCol extends BaseWidget {
   /** @type {String} - selection/index/expand*/
   type;
@@ -66,22 +65,20 @@ export default class TablePagingCol extends BaseWidget {
   formatter;
   /**
    * @type {(value: *,row: Object,column)=>*} type - description
-  */
+   */
   exporter;
   constructor(obj = defaultParams()) {
     // @ts-ignore
     super(obj);
     Object.assign(this, defaultParams(), obj);
-    if (!this.Index)
-      this.Index = +this.id;
+    if (!this.Index) this.Index = +this.id;
   }
 
   GetAllChild() {
     var a = [];
-    if (this.data)
-      a.push(this.data);
+    if (this.data) a.push(this.data);
     if (this.children && this.children.length) {
-      this.children.forEach(p => {
+      this.children.forEach((p) => {
         a = a.concat(p.GetAllChild());
       });
     }

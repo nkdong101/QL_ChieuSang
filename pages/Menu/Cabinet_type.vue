@@ -13,42 +13,22 @@
       </template>
       <template slot="column-content-button" slot-scope="{ row }">
         <div style="display: flex">
-          <el-tooltip placement="top" content="Thêm vật tư">
-            <el-button
-              class="icon-btn icon-btn"
-              v-if="pagePermission.add && !row.Parent_id"
-              type="warning"
-              @click="AddChild(row)"
-            >
-              <i class="fa fa-plus" aria-hidden="true"></i>
-            </el-button>
-          </el-tooltip>
           <el-button
-            type="primary"
             v-if="pagePermission.edit"
             class="icon-btn"
+            type="primary"
             @click="Edit(row)"
           >
             <i class="el-icon-edit"></i
           ></el-button>
-
           <el-button
-            class="icon-btn"
             v-if="pagePermission.delete"
+            class="icon-btn"
             type="danger"
             @click="Delete(row)"
           >
             <i class="el-icon-delete"></i>
           </el-button>
-        </div>
-      </template>
-      <template slot="column-content-Code" slot-scope="{ row, column, i }">
-        <div
-          @click="sss(row, column, i)"
-          v-if="row.Childs?.length == 0 && !row.Parent_id"
-          style="margin-left: 20px; display: flex"
-        >
-          {{ row.Code }}
         </div>
       </template>
     </TablePaging>
@@ -66,7 +46,7 @@ import API from "~/assets/scripts/API";
 import TablePaging from "~/assets/scripts/base/TablePaging";
 import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
 import DefaultForm from "~/assets/scripts/base/DefaultForm";
-import Material_Group from "~/assets/scripts/objects/MaterialGroup";
+import Cabinet_type from "~/assets/scripts/objects/BubType";
 
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import {
@@ -81,28 +61,18 @@ export default {
     return {
       isAdd: null,
       tp: new TablePaging({
-        title: "Nhóm vật tư",
-        data: API.Material_Group_GetList,
-        treeprops: {
-          children: "Childs",
-        },
-        keyId: "Id",
-        expandAll: false,
-        clickRow: (row) => {
-          this.clickRow(row);
-        },
-        expandRowKeys: [],
-        disableSelectRow: true,
+        title: "loại đèn",
+        data: API.Cabinet_type_GetList,
+
         cols: [
-          // new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
+          new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
           new TablePagingCol({
-            title: "Mã vật tư",
+            title: "Mã loại",
             data: "Code",
             min_width: 150,
-            class: "codeClas",
           }),
           new TablePagingCol({
-            title: "Tên vật tư",
+            title: "Tên loại đèn",
             data: "Name",
             min_width: 200,
           }),
@@ -124,17 +94,17 @@ export default {
           new TablePagingCol({
             title: "",
             data: "button",
-            min_width: 120,
+            min_width: 100,
             sortable: false,
           }),
         ],
       }),
       form: new DefaultForm({
-        obj: new Material_Group(),
+        obj: new Cabinet_type(),
         title: "",
         visible: false,
         width: "500px",
-        ShowForm: (title, isAdd, obj, isAddChild) => {
+        ShowForm: (title, isAdd, obj) => {
           this.isAdd = isAdd;
           var _app = this;
           // var obj = null;
@@ -146,20 +116,8 @@ export default {
           //   }
           // }
           this.form.title = title;
-
-          if (isAddChild) {
-            this.form.obj = new Material_Group({
-              ...{},
-              Parent_id: isAddChild ? obj.Id : null,
-            });
-          } else {
-            this.form.obj = new Material_Group({
-              ...obj,
-            });
-          }
-
+          this.form.obj = new Cabinet_type(obj);
           this.form.visible = true;
-          console.log(this.form.obj);
         },
         Save: () => {
           this.Save();
@@ -168,29 +126,14 @@ export default {
     };
   },
   methods: {
-    AddChild(row) {
-      this.form.ShowForm("Thêm vật tư", true, row, true);
-    },
-    clickRow(row) {
-      // console.log(row);
-      const index = this.tp.expandRowKeys.indexOf(row.Id);
-      if (index > -1) {
-        this.tp.expandRowKeys.splice(index, 1);
-      } else {
-        this.tp.expandRowKeys.push(row.Id);
-      }
-      console.log(this.tp.expandRowKeys);
-      // this.$refs.tp.toggleRowExpansion(row);
-    },
-
     LoadData() {
       this.$refs.tp.LoadData(true);
     },
     Add() {
-      this.form.ShowForm("Thêm nhóm vật liệu", true);
+      this.form.ShowForm("Thêm vỏ tủ", true);
     },
     Edit(row) {
-      this.form.ShowForm("Sửa nhóm vật liệu", false, row);
+      this.form.ShowForm("Sửa vỏ tủ", false, row);
     },
     Delete(row) {
       ShowConfirm({
@@ -201,7 +144,7 @@ export default {
         .then(() => {
           GetDataAPI({
             method: "post",
-            url: API.Material_Group_Delete,
+            url: API.Cabinet_type_Delete,
             params: row,
             action: (re) => {
               if (re == "OK") {
@@ -225,8 +168,8 @@ export default {
           return;
         } else {
           let api = this.form.obj.Id
-            ? API.Material_Group_Edit
-            : API.Material_Group_Add;
+            ? API.Cabinet_type_Edit
+            : API.Cabinet_type_Add;
           GetDataAPI({
             method: "post",
             url: api,
@@ -248,11 +191,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-::v-deep .codeClas {
-  .cell {
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

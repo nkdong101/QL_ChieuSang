@@ -21,7 +21,7 @@
       ref="gmap"
       :center="initCenter"
       @click="updateMarkerPosition"
-      :zoom="12"
+      :zoom="8"
       style="width: 100%; height: 400px"
     >
       <GmapMarker :position="position" />
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { EventBus } from "~/assets/scripts/EventBus";
 import Location from "~/assets/scripts/objects/menu/Location";
 
 export default {
@@ -58,6 +59,11 @@ export default {
     },
   },
   methods: {
+    handlePlaceChange(data) {
+      console.log("handlePlaceChange", data);
+      this.position = data;
+      this.initCenter = data;
+    },
     updateMarkerPosition(event) {
       this.position = {
         lat: event.latLng.lat(),
@@ -103,6 +109,13 @@ export default {
     // this.$nextTick(() => {
     //   this.$emit("input", this.value);
     // });
+  },
+
+  beforeMount() {
+    EventBus.$on("placeChange", this.handlePlaceChange);
+  },
+  beforeDestroy() {
+    EventBus.$off("placeChange", this.handlePlaceChange);
   },
 };
 </script>

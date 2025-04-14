@@ -84,10 +84,13 @@ export default {
           new TablePagingCol({
             title: "Móng tủ (D x R x C)",
             data: "Cabinet_D",
-            min_width: 150,
+            min_width: 170,
 
             formatter: (value, row) => {
-              return `${row.Cabinet_D} x ${row.Cabinet_R} x ${row.Cabinet_C}`;
+              const d = row?.Cabinet_D ?? "...";
+              const r = row?.Cabinet_R ?? "...";
+              const c = row?.Cabinet_C ?? "...";
+              return `${d} x ${r} x ${c}`;
             },
           }),
           new TablePagingCol({
@@ -120,7 +123,7 @@ export default {
           new TablePagingCol({
             title: "Ngày hết bảo hành",
             data: "Date_Warranty",
-            min_width: 150,
+            min_width: 170,
             formatter: "date",
           }),
           new TablePagingCol({
@@ -146,7 +149,7 @@ export default {
         obj: new Route_cabinet(),
         title: "",
         visible: false,
-        width: "900px",
+        width: "1100px",
         ShowForm: (title, isAdd, obj) => {
           this.isAdd = isAdd;
           var _app = this;
