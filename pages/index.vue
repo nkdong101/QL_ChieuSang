@@ -124,7 +124,7 @@ export default {
     };
   },
   mounted() {
-    this.initAutocomplete();
+    // this.initAutocomplete();
   },
   methods: {
     handleRowClick(row) {
