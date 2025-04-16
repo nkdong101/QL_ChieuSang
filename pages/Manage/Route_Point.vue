@@ -110,7 +110,7 @@ export default {
         obj: new Route_Point(),
         title: "",
         visible: false,
-        width: "700px",
+        width: "800px",
         ShowForm: (title, isAdd, obj) => {
           this.isAdd = isAdd;
           var _app = this;
@@ -193,7 +193,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.pagePermission);
+    //console.log(this.pagePermission);
   },
 };
 </script>

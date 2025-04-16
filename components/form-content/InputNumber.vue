@@ -1,16 +1,22 @@
 <template>
-  <el-input v-model.lazy="data"
-            :placeholder="placeholder"
-            :disabled="disabled"
-            @blur="blur()"
-            @focus="focus()"
-            :class="{'hasSuffix': suffixIcon && data && !isFocus? true : false}"
-         
-            :is-focus="isFocus" >
-            
-            <div v-if="suffixIcon && data && !isFocus"  slot="suffix" @click="focusInput" class="">{{ suffixIcon }}</div>
-            </el-input>
-
+  <el-input
+    v-model.lazy="data"
+    :placeholder="placeholder"
+    :disabled="disabled"
+    @blur="blur()"
+    @focus="focus()"
+    :class="{ hasSuffix: suffixIcon && data && !isFocus ? true : false }"
+    :is-focus="isFocus"
+  >
+    <div
+      v-if="suffixIcon && data && !isFocus"
+      slot="suffix"
+      @click="focusInput"
+      class=""
+    >
+      {{ suffixIcon }}
+    </div>
+  </el-input>
 </template>
 
 <script>
@@ -44,10 +50,9 @@ export default {
     },
     negative_allowed: {
       type: Boolean,
-      default: true
+      default: true,
     },
-    suffixIcon: {
-    },
+    suffixIcon: {},
   },
   data() {
     return { data: "", isFocus: false };
@@ -83,7 +88,7 @@ export default {
     },
   },
   methods: {
-    focusInput(){
+    focusInput() {
       this.isFocus = true;
     },
     getNumberFormat(val, decimal_alway) {
@@ -161,26 +166,20 @@ export default {
 };
 </script>
 
-
 <style lang="scss" scoped>
-
-@media only screen and (min-width: 768px){
-  
+@media only screen and (min-width: 768px) {
 }
 
-::v-deep  input {
+::v-deep input {
   &:not([is-focus]) {
-    text-align: right !important;
+    //text-align: right !important;
     padding-right: 5px !important;
   }
-
-
 }
 
 .hasSuffix {
-  ::v-deep .el-input__inner{
-    padding-right:45px !important;
-
+  ::v-deep .el-input__inner {
+    padding-right: 45px !important;
   }
 }
 </style>

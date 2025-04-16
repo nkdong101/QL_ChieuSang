@@ -25,6 +25,7 @@
       style="width: 100%; height: 400px"
     >
       <GmapMarker :position="position" />
+      <GmapPolyline :path="polylinePath" :options="polylineOptions" />
     </GmapMap>
   </div>
 </template>
@@ -47,6 +48,15 @@ export default {
         // draggableCursor: "grab",
         // draggingCursor: "grabbing",
       },
+      polylinePath: [
+        // { lat: 37.772, lng: -122.214 },
+        // { lat: -27.467, lng: 153.027 },
+      ],
+      polylineOptions: {
+        // strokeColor: "",
+        strokeOpacity: 1.0,
+        strokeWeight: 2,
+      },
     };
   },
 
@@ -59,6 +69,31 @@ export default {
     },
   },
   methods: {
+    // directions() {
+    //   const directionsService = new google.maps.DirectionsService();
+
+    //   directionsService.route(
+    //     {
+    //       origin: { lat: 20.706298419442177, lng: 105.84199060712479 }, // Điểm đầu
+    //       destination: { lat: 20.70385555723024, lng: 105.84651231765747 }, // Điểm cuối
+    //       travelMode: "DRIVING",
+    //     },
+    //     (response, status) => {
+    //       if (status === "OK") {
+    //         const route = response.routes[0];
+    //         const path = route.overview_path.map((latlng) => ({
+    //           lat: latlng.lat(),
+    //           lng: latlng.lng(),
+    //         }));
+
+    //         // set polyline path here
+    //         this.polylinePath = path;
+    //       } else {
+    //         console.error("Directions request failed due to " + status);
+    //       }
+    //     }
+    //   );
+    // },
     handlePlaceChange(data) {
       console.log("handlePlaceChange", data);
       this.position = data;
@@ -75,6 +110,7 @@ export default {
     // console.log(navigator.geolocation);
     this.$nextTick(() => {
       console.log("this.value", this.value);
+      // this.directions();
       if (navigator.geolocation && !(this.value?.Lng || this.value?.Lat)) {
         navigator.geolocation.getCurrentPosition(
           (pos) => {

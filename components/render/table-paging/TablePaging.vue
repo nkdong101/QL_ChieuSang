@@ -45,7 +45,7 @@
         <span
           v-if="pagingShowOpt.summary"
           v-html="GetPagingDetail()"
-          style="padding-left: 5px"
+          style="padding-left: 5px; margin-right: 5px"
         ></span>
 
         <slot name="btn2" v-bind:tempRows="tempRows"> </slot>
@@ -1404,6 +1404,9 @@ export default {
     flex-wrap: wrap;
 
     // padding-top: 3px;
+    .paging-size {
+      flex: 1;
+    }
     .paging-size,
     .paging-page {
       display: flex;

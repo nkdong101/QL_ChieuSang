@@ -1,6 +1,18 @@
 <template>
   <div style="height: 100%">
     <TablePaging ref="tp" :model="tp">
+      <template slot="btn2">
+        <InputContainer
+          :label="'Xã/Phường'"
+          style="width: 400px"
+          :labelWidth="120"
+        >
+          <InputSelect
+            :model="Para.dm_Commune"
+            v-model.lazy="tp.params.iCommune_id"
+          />
+        </InputContainer>
+      </template>
       <template slot="column-header-button">
         <el-button class="icon-btn icon-btn" type="primary" @click="Add()">
           <i class="el-icon-plus"></i
@@ -48,7 +60,9 @@ export default {
       tp: new TablePaging({
         title: "Tủ chiếu sáng",
         data: API.Route_cabinet_GetList,
-
+        params: {
+          iCommune_id: "",
+        },
         cols: [
           new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
           new TablePagingCol({
@@ -171,6 +185,15 @@ export default {
       }),
     };
   },
+  watch: {
+    "tp.params.iCommune_id": function (newVal, oldVal) {
+      this.$nextTick(() => {
+        if (newVal != oldVal) {
+          this.LoadData();
+        }
+      });
+    },
+  },
   methods: {
     LoadData() {
       this.$refs.tp.LoadData(true);
@@ -232,7 +255,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.pagePermission);
+    //console.log(this.pagePermission);
   },
 };
 </script>

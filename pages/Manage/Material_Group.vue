@@ -243,7 +243,7 @@ export default {
   },
 
   mounted() {
-    console.log(this.pagePermission);
+    //console.log(this.pagePermission);
   },
 };
 </script>

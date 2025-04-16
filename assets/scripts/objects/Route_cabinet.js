@@ -42,6 +42,10 @@ export default class Route_cabinet {
   /** @type {string} - description */
   Description;
 
+  Management_team_id;
+  Users;
+  Route_id;
+  Commune_id;
   Location = new Location();
   /** @type {number} - description */
   Id;
@@ -55,6 +59,25 @@ export default class Route_cabinet {
   UserUpdate;
 
   _formElements = {
+    Commune_id: new FormElement({
+      label: "Xã phường",
+      model: "Commune_id",
+      type: FormElementType.select,
+      options: Para.dm_Commune,
+      labelWidth: 100,
+    }),
+    Route_id: new FormElement({
+      label: "Tuyến đường",
+      model: "Route_id",
+      type: FormElementType.select,
+      options: Para.dm_Routes,
+    }),
+    Management_team_id: new FormElement({
+      label: "Đội quản lý",
+      model: "Management_team_id",
+      type: FormElementType.select,
+      options: Para.dm_Management_team,
+    }),
     Description: new FormElement({
       label: "Mô tả",
       model: "Description",
@@ -249,6 +272,13 @@ export default class Route_cabinet {
                   child: [
                     this._formElements.Lighting_Group_Id,
                     this._formElements.Construction_id,
+                  ],
+                }),
+                this._formElements.Management_team_id,
+                new FormElement({
+                  child: [
+                    this._formElements.Route_id,
+                    this._formElements.Commune_id,
                   ],
                 }),
                 new FormElement({

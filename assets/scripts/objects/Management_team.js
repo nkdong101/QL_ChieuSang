@@ -55,8 +55,8 @@ export default class Management_team {
     Routes: new FormElement({
       label: "Tuyền đường",
       model: "Routes",
-      type: FormElementType.text,
-      // options: Para.Para_Account
+      type: FormElementType.select,
+      options: Para.dm_Routes.set((p) => (p.multiple = true)),
     }),
   };
 

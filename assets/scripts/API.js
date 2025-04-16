@@ -104,6 +104,16 @@ export default {
   Cabinet_type_Add: linkAPI + "Cabinet_type/Add",
   Cabinet_type_Edit: linkAPI + "Cabinet_type/Edit",
   Cabinet_type_Delete: linkAPI + "Cabinet_type/Delete",
+
+  Route_Cable_GetList: linkAPI + "Route_Cable/GetList",
+  Route_Cable_Add: linkAPI + "Route_Cable/Add",
+  Route_Cable_Edit: linkAPI + "Route_Cable/Edit",
+  Route_Cable_Delete: linkAPI + "Route_Cable/Delete",
+
+  Routes_GetList: linkAPI + "Routes/GetList",
+  Routes_Add: linkAPI + "Routes/Add",
+  Routes_Edit: linkAPI + "Routes/Edit",
+  Routes_Delete: linkAPI + "Routes/Delete",
 };
 
 export var ServerAPI = {

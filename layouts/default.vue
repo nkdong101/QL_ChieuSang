@@ -142,6 +142,42 @@ export default {
             },
           });
         });
+        let dm_Route_cabinet = new Promise((rs) => {
+          GetDataAPI({
+            url: API.Route_cabinet_GetList,
+            action: (re) => {
+              Para.dm_Route_cabinet.data = re;
+              rs();
+            },
+          });
+        });
+        let dm_Commune = new Promise((rs) => {
+          GetDataAPI({
+            url: API.Commune_GetList,
+            action: (re) => {
+              Para.dm_Commune.data = re;
+              rs();
+            },
+          });
+        });
+        let dm_Routes = new Promise((rs) => {
+          GetDataAPI({
+            url: API.Routes_GetList,
+            action: (re) => {
+              Para.dm_Routes.data = re;
+              rs();
+            },
+          });
+        });
+        let Cable_type_id = new Promise((rs) => {
+          GetDataAPI({
+            url: API.Cable_type_GetList,
+            action: (re) => {
+              Para.dm_Cable_type.data = re;
+              rs();
+            },
+          });
+        });
 
         let account = new Promise((rs) => {
           GetDataAPI({
@@ -159,11 +195,15 @@ export default {
         Promise.all([
           dm_Lighting_Group,
           hangsx,
+          dm_Route_cabinet,
           dm_Construction_Unit,
           dm_coulumn,
           Country,
           dm_Managem,
           account,
+          Cable_type_id,
+          dm_Routes,
+          dm_Commune,
         ]).then((result) => {
           rs();
         });

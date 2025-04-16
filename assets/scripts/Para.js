@@ -8,54 +8,15 @@ import API from "./API";
 import { SelectOption } from "./base/SelectOption";
 
 export var Para = {
-  EmailConfigType: new SelectOption({
+  Cable_form: new SelectOption({
     data: [
-      { Id: 1, Name: "Create User" },
-      { Id: 2, Name: "PR Submitted" },
-      { Id: 3, Name: "PR Withdraw" },
-      { Id: 4, Name: "PR Approving" },
-      { Id: 5, Name: "PR Approved" },
-      { Id: 6, Name: "PR Rejected" },
-      { Id: 7, Name: "PR Purchasing" },
-      { Id: 8, Name: "PR Purchasing Authority" },
-      { Id: 9, Name: "PR Techinical" },
-      { Id: 10, Name: "PR Purchased" },
-      { Id: 11, Name: "PR Void" },
-      { Id: 12, Name: "PR Amendment" },
+      { Id: 1, Name: "Treo" },
+      { Id: 2, Name: "Ngầm" },
     ],
   }),
 
-  eNguonvon: new SelectOption({
-    data: [
-      { Id: 1, Name: "Nguồn vốn VEC" },
-      { Id: 2, Name: "Dự án" },
-      { Id: 3, Name: "Khác" },
-    ],
-  }),
-  dm_department: new SelectOption({
+  dm_Cable_type: new SelectOption({
     data: [],
-  }),
-  RF_Type: new SelectOption({
-    data: [
-      { Id: 0, Name: "Thường" },
-      { Id: 1, Name: "Kim loại" },
-    ],
-  }),
-
-  Para_Purchase_State: new SelectOption({
-    data: [
-      { Id: 1, Name: "Draft" },
-      { Id: 2, Name: "Submitted" },
-      { Id: 3, Name: "Rejected" },
-      { Id: 4, Name: "Endorsed" },
-      { Id: 5, Name: "Amendment" },
-      { Id: 6, Name: "Approved" },
-      // { Id: 7, Name: "Request void" },
-      // { Id: 8, Name: "Pending void" },
-      { Id: 9, Name: "Voided" },
-      { Id: 10, Name: "Adjustment " },
-      { Id: 11, Name: "Purchased " },
-    ],
   }),
 
   OrderProcess: new SelectOption({
@@ -68,6 +29,12 @@ export var Para = {
       { Id: 2, Name: "Offline" },
     ],
   }),
+  dm_Commune: new SelectOption({
+    data: [],
+  }),
+  dm_Routes: new SelectOption({
+    data: [],
+  }),
   dm_County: new SelectOption({
     data: [],
   }),
@@ -75,6 +42,9 @@ export var Para = {
     data: [],
   }),
   dm_Lighting_Group: new SelectOption({
+    data: [],
+  }),
+  dm_Route_cabinet: new SelectOption({
     data: [],
   }),
   Box_Type: new SelectOption({

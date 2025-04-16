@@ -317,6 +317,20 @@ export default {
     };
   },
   methods: {
+    componentsValueChange(model, newValue, oldValue) {
+      // console.log(model, newValue, oldValue);
+      if (this.model.watch) {
+        // console.log(model)
+        this.model.watch(
+          this.formInfo.formData,
+          newValue,
+          oldValue,
+          this,
+          false,
+          model
+        );
+      }
+    },
     onFileChange(fileList) {
       // console.log("onFileChange", fileList);
       if (this.model.events.onChangeFile) {

@@ -6,23 +6,20 @@ import {
 import { SelectOption } from "../base/SelectOption";
 import { Para } from "../Para";
 import Address from "./menu/Location";
-export default class dm_Lighting_Group {
-  Location = new Address();
+export default class Routes {
   /** @type {string} - description */
   Code;
+  Name;
+  Distance;
+  /** @type {string} - description */
+  From_Point = new Address();
+  /** @type {string} - description */
+  To_Point = new Address();
+  /** @type {string} - description */
+  Description;
+  /** @type {string} - description */
+  Communes;
 
-  /** @type {string} - description */
-  Address;
-  /** @type {string} - description */
-  Height;
-  /** @type {string} - description */
-  Hangsx_id;
-  /** @type {string} - description */
-  Route_cabinet_id;
-  /** @type {string} - description */
-  Route_Cables;
-  /** @type {string} - description */
-  Column_Type_id;
   /** @type {number} - description */
   Id;
   /** @type {string} - description */
@@ -35,44 +32,37 @@ export default class dm_Lighting_Group {
   UserUpdate;
 
   _formElements = {
-    Address: new FormElement({
-      label: "Địa chỉ",
-      model: "Address",
-      type: FormElementType.address,
+    Description: new FormElement({
+      label: "Mô tả",
+      model: "Description",
+      type: FormElementType.text,
+      attr: {
+        type: "textarea",
+      },
     }),
     Code: new FormElement({
-      label: "Mã",
+      label: "Mã tuyến đường",
       model: "Code",
       type: FormElementType.text,
     }),
-    Height: new FormElement({
-      label: "Chiều cao",
-      model: "Height",
+    Communes: new FormElement({
+      label: "Xã đi qua",
+      model: "Communes",
+      type: FormElementType.select,
+      options: Para.dm_Commune.set((p) => (p.multiple = true)),
+    }),
+    Name: new FormElement({
+      label: "Tên tuyến đường",
+      model: "Name",
+      type: FormElementType.text,
+    }),
+
+    Distance: new FormElement({
+      label: "Khoảng cách",
+      model: "Distance",
       type: FormElementType.number,
     }),
-    Hangsx_id: new FormElement({
-      label: "Hãng sản xuất",
-      model: "Hangsx_id",
-      type: FormElementType.select,
-      options: Para.dm_Hangsx,
-    }),
-    Route_cabinet_id: new FormElement({
-      label: "Tủ điều khiển",
-      model: "Route_cabinet_id",
-      type: FormElementType.select,
-      options: Para.dm_Route_cabinet,
-    }),
-    Column_Type_id: new FormElement({
-      label: "Loại cột",
-      model: "Column_Type_id",
-      type: FormElementType.select,
-      options: Para.dm_Column_Type,
-    }),
-    Location: new FormElement({
-      model: "Location",
-      type: FormElementType.location,
-      // options: Para.dm_Column_Type,
-    }),
+
     Id: new FormElement({
       label: "Id",
       model: "Id",
@@ -103,14 +93,14 @@ export default class dm_Lighting_Group {
 
   /**
    *
-   * @param {dm_Lighting_Group} obj
+   * @param {Routes} obj
    */
   constructor(obj) {
     this.update(obj);
   }
   /**
    *
-   * @param {dm_Lighting_Group} obj
+   * @param {Routes} obj
    */
   update(obj) {
     Object.assign(this, obj);
@@ -125,25 +115,19 @@ export default class dm_Lighting_Group {
     return new FormInfo({
       formData: this,
       elements: [
-        new FormElement({
-          child: [this._formElements.Code, this._formElements.Height],
-        }),
-        new FormElement({
-          child: [
-            this._formElements.Hangsx_id,
-            this._formElements.Route_cabinet_id,
-          ],
-        }),
-        this._formElements.Column_Type_id,
-        this._formElements.Address,
-        this._formElements.Location,
+        this._formElements.Code,
+        this._formElements.Name,
+        this._formElements.Communes,
+        this._formElements.Distance,
 
-        // new FormElement({
-        //   child: [
-        //     this._formElements.Location_lat,
-        //     this._formElements.Location_lng,
-        //   ],
-        // }),
+        this._formElements.Description,
+
+        new FormElement({
+          type: "FromToLocation",
+          attr: {
+            p_Obj: this,
+          },
+        }),
 
         // this._formElements.Use,
       ],
