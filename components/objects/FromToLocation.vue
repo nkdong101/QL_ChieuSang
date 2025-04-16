@@ -219,10 +219,22 @@ export default {
               };
               console.log("this.initCenter", this.initCenter);
             } else {
-              this.initCenter = {
-                lat: pos.coords.latitude,
-                lng: pos.coords.longitude,
-              };
+              if (this.p_Obj.From_Point.Lat && this.p_Obj.From_Point.Lng) {
+                this.initCenter = {
+                  lat: this.p_Obj.From_Point.Lat,
+                  lng: this.p_Obj.From_Point.Lng,
+                };
+              } else if (this.p_Obj.To_Point.Lat && this.p_Obj.To_Point.Lng) {
+                this.initCenter = {
+                  lat: this.p_Obj.To_Point.Lat,
+                  lng: this.p_Obj.To_Point.Lng,
+                };
+              } else {
+                this.initCenter = {
+                  lat: pos.coords.latitude,
+                  lng: pos.coords.longitude,
+                };
+              }
             }
             // this.initCenter = new Location({
             //   lat: pos.coords.latitude,
