@@ -1,6 +1,21 @@
 <template>
   <div style="height: 100%">
     <TablePaging ref="tp" :model="tp">
+      <template slot="btn">
+        <el-button
+          style="
+            height: 25px;
+            width: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 5px;
+          "
+          @click="showFilter()"
+        >
+          <i class="fa fa-filter"></i>
+        </el-button>
+      </template>
       <template slot="column-header-button">
         <el-button
           class="icon-btn icon-btn"
@@ -38,6 +53,11 @@
         <FormInfo ref="form" :model="form.obj.form()" />
       </div>
     </DefaultForm>
+    <DefaultForm :model="formFilter" @actionOK="Search()">
+      <div style="overflow: hidden" slot="content">
+        <FormInfo ref="formFilter" :model="tp.params.form()" />
+      </div>
+    </DefaultForm>
   </div>
 </template>
 
@@ -47,6 +67,7 @@ import TablePaging from "~/assets/scripts/base/TablePaging";
 import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
 import DefaultForm from "~/assets/scripts/base/DefaultForm";
 import Route_Point from "~/assets/scripts/objects/Route_Point";
+import Route_Point_Filter from "~/assets/scripts/objects/Route_Point_Filter";
 import { EventBus } from "~/assets/scripts/EventBus.js";
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import {
@@ -54,16 +75,22 @@ import {
   ShowConfirm,
   ShowMessage,
 } from "~/assets/scripts/Functions";
-import { Para } from "~/assets/scripts/Para";
-import APIHelper from "~/assets/scripts/API/APIHelper";
+
 export default {
   data() {
     return {
+      formFilter: new DefaultForm({
+        OKtext: "Tìm kiếm",
+        // visible: true,
+        // type: "dialog",
+        width: "400px",
+        title: "Lọc dữ liệu",
+      }),
       isAdd: null,
       tp: new TablePaging({
         title: "Điểm sáng (Cột đèn)",
         data: API.Route_Point_GetList,
-
+        params: new Route_Point_Filter(),
         cols: [
           new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
           new TablePagingCol({ title: "Mã", data: "Code", min_width: 100 }),
@@ -133,6 +160,13 @@ export default {
     };
   },
   methods: {
+    Search() {
+      this.LoadData();
+      this.formFilter.visible = false;
+    },
+    showFilter() {
+      this.formFilter.visible = true;
+    },
     LoadData() {
       this.$refs.tp.LoadData(true);
     },

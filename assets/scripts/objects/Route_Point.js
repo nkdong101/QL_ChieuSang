@@ -18,6 +18,10 @@ export default class dm_Lighting_Group {
   /** @type {string} - description */
   Hangsx_id;
   /** @type {string} - description */
+  Routes_id;
+  /** @type {string} - description */
+  Commune_id;
+  /** @type {string} - description */
   Route_cabinet_id;
   /** @type {string} - description */
   Route_Cables;
@@ -39,6 +43,24 @@ export default class dm_Lighting_Group {
       label: "Địa chỉ",
       model: "Address",
       type: FormElementType.address,
+    }),
+    Routes_id: new FormElement({
+      label: "Tuyến đường",
+      model: "Routes_id",
+      type: FormElementType.select,
+      options: Para.dm_Routes,
+    }),
+    Route_Cables: new FormElement({
+      label: "Đoạn cáp",
+      model: "Route_Cables",
+      type: FormElementType.select,
+      options: Para.dm_Route_Cable,
+    }),
+    Commune_id: new FormElement({
+      label: "Xã/Phường",
+      model: "Commune_id",
+      type: FormElementType.select,
+      options: Para.dm_Commune.set((p) => (p.multiple = true)),
     }),
     Code: new FormElement({
       label: "Mã",
@@ -134,7 +156,15 @@ export default class dm_Lighting_Group {
             this._formElements.Route_cabinet_id,
           ],
         }),
-        this._formElements.Column_Type_id,
+        new FormElement({
+          child: [
+            this._formElements.Routes_id,
+            this._formElements.Column_Type_id,
+          ],
+        }),
+        this._formElements.Commune_id,
+        this._formElements.Route_Cables,
+
         this._formElements.Address,
         this._formElements.Location,
 

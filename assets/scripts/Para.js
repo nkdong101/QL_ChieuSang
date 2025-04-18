@@ -23,11 +23,8 @@ export var Para = {
     data: API.Purchase_SearchOrderProcess,
     remote: true,
   }),
-  InventoryType: new SelectOption({
-    data: [
-      { Id: 1, Name: "Online" },
-      { Id: 2, Name: "Offline" },
-    ],
+  dm_Route_Cable: new SelectOption({
+    data: [],
   }),
   dm_Commune: new SelectOption({
     data: [],

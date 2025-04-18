@@ -1,197 +1,55 @@
 <template>
-  <div style="height: 100%">
-    <!-- <el-input
-      ref="autocompleteInput"
-      id="autocomplete"
-      v-model="address"
-      placeholder="Enter an address"
-      @keydown.enter.native.prevent="handleEnter"
-    /> -->
-    <!-- <TablePaging ref="tp" style="height: 600px" :model="tp"> </TablePaging>
-    <el-table
-      ref="table1"
-      :data="tableData1"
-      style="width: 100%; margin-bottom: 20px"
-      row-key="id"
-      border
-      @row-click="handleRowClick1"
-      :expand-row-keys="expandedRows"
-    >
-      <el-table-column prop="date" label="date" sortable width="180">
-      </el-table-column>
-      <el-table-column prop="name" label="Name" sortable width="180">
-      </el-table-column>
-    </el-table> -->
-  </div>
+  <div ref="autocompleteContainer" class="autocomplete-wrapper"></div>
 </template>
 
 <script>
-import TablePaging from "~/assets/scripts/base/TablePaging";
-import TablePagingCol from "~/assets/scripts/base/TablePagingCol";
-
 export default {
-  name: "AddressInput",
-  data() {
-    return {
-      address: "",
-      autocomplete: null,
-      isSimulating: false,
-      tp: new TablePaging({
-        title: "Nhóm vật tư",
-        data: [
-          { id: "1", date: "2016-05-02", name: "wangxiaohu" },
-          { id: "2", date: "2016-05-04", name: "wangxiaohu" },
-          {
-            id: "3",
-            date: "2016-05-01",
-            name: "wangxiaohu",
-            children: [
-              { id: "31", date: "2016-05-01", name: "wangxiaohu" },
-              { id: "32", date: "2016-05-01", name: "wangxiaohu" },
-            ],
-          },
-          { id: "4", date: "2016-05-03", name: "wangxiaohu" },
-        ],
-        treeprops: {
-          children: "children",
-        },
-        keyId: "id",
-        expandAll: false,
-        clickRow: (row) => {
-          this.handleRowClick(row);
-        },
-        expandRowKeys: [],
-        disableSelectRow: true,
-        cols: [
-          // new TablePagingCol({ title: "Stt", data: "SttTP", min_width: 60 }),
-          new TablePagingCol({
-            title: "date",
-            data: "date",
-            min_width: 150,
-            class: "codeClas",
-          }),
-          new TablePagingCol({
-            title: "name",
-            data: "name",
-            min_width: 200,
-          }),
-
-          new TablePagingCol({
-            title: "",
-            data: "button",
-            min_width: 100,
-            sortable: false,
-          }),
-        ],
-      }),
-
-      tableData1: [
-        {
-          id: "1",
-          date: "2016-05-02",
-          name: "wangxiaohu",
-        },
-        {
-          id: "2",
-          date: "2016-05-04",
-          name: "wangxiaohu",
-        },
-        {
-          id: "3",
-          date: "2016-05-01",
-          name: "wangxiaohu",
-          children: [
-            {
-              id: "31",
-              date: "2016-05-01",
-              name: "wangxiaohu",
-            },
-            {
-              id: "32",
-              date: "2016-05-01",
-              name: "wangxiaohu",
-            },
-          ],
-        },
-        {
-          id: "4",
-          date: "2016-05-03",
-          name: "wangxiaohu",
-        },
-      ],
-
-      expandedRows: [], // Array to hold the IDs of expanded rows
-    };
-  },
+  name: "PlaceAutocomplete",
   mounted() {
-    // this.initAutocomplete();
+    this.initAutocomplete();
   },
   methods: {
-    handleRowClick(row) {
-      const index = this.tp.expandRowKeys.indexOf(row.id);
-      if (index > -1) {
-        // Collapse if already expanded
-        this.tp.expandRowKeys.splice(index, 1);
-      } else {
-        // Expand
-        this.tp.expandRowKeys.push(row.id);
+    async initAutocomplete() {
+      // Kiểm tra xem Google Maps đã sẵn sàng chưa
+      if (!window.google || !google.maps || !google.maps.importLibrary) {
+        console.error("Google Maps chưa được load hoặc thiếu API key");
+        return;
       }
-      console.log(this.tp.expandRowKeys);
-    },
-    handleRowClick1(row) {
-      const index = this.expandedRows.indexOf(row.id);
-      if (index > -1) {
-        // Collapse if already expanded
-        this.expandedRows.splice(index, 1);
-      } else {
-        // Expand
-        this.expandedRows.push(row.id);
-      }
-      console.log(this);
-    },
-    initAutocomplete() {
-      // Get the actual <input> element inside el-input
-      const input = this.$refs.autocompleteInput.$el.querySelector("input");
 
-      this.autocomplete = new google.maps.places.Autocomplete(input, {
-        types: ["geocode"],
-      });
+      // Import thư viện "places" mới
+      const { PlaceAutocompleteElement } = await google.maps.importLibrary(
+        "places"
+      );
 
-      this.autocomplete.addListener("place_changed", () => {
-        const place = this.autocomplete.getPlace();
-        this.address = place.formatted_address || "";
-        console.log("Selected place:", this.address);
-      });
-    },
+      // Tạo Web Component
+      const autocomplete = new PlaceAutocompleteElement();
 
-    handleEnter() {
-      if (this.isSimulating) return;
+      // Đặt placeholder hoặc các thuộc tính khác
+      autocomplete.setAttribute("placeholder", "Nhập địa chỉ...");
 
-      const input = this.$refs.autocompleteInput.$el.querySelector("input");
-      this.isSimulating = true;
+      // Gắn vào DOM
+      this.$refs.autocompleteContainer.appendChild(autocomplete);
 
-      const downArrow = new KeyboardEvent("keydown", {
-        key: "ArrowDown",
-        keyCode: 40,
-        which: 40,
-        bubbles: true,
-      });
-      input.dispatchEvent(downArrow);
+      // Lắng nghe sự kiện chọn địa điểm
+      autocomplete.addEventListener(
+        "gmpx-placeautocomplete-placechange",
+        () => {
+          const place = autocomplete.value;
+          console.log("Địa điểm được chọn:", place);
 
-      this.$nextTick(() => {
-        const enterKey = new KeyboardEvent("keydown", {
-          key: "Enter",
-          keyCode: 13,
-          which: 13,
-          bubbles: true,
-        });
-        input.dispatchEvent(enterKey);
-        this.isSimulating = false;
-      });
-      // setTimeout(() => {
-
-      // }, 100);
+          // Emit dữ liệu ra ngoài nếu cần
+          this.$emit("place-selected", place);
+        }
+      );
     },
   },
 };
 </script>
+
+<style scoped>
+.autocomplete-wrapper {
+  max-width: 500px;
+  margin: auto;
+  padding: 1rem;
+}
+</style>

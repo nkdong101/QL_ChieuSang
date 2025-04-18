@@ -42,7 +42,7 @@ vueI
       :center="initCenter"
       @click="updateMarkerPosition"
       :options="mapOptions"
-      :zoom="10"
+      :zoom="zoom"
       style="width: 100%; height: 400px"
     >
       <GmapMarker
@@ -65,7 +65,7 @@ vueI
         @dragend="onMarkerDragEnd('ToPoint', $event)"
         :icon="{ url: 'http://maps.google.com/mapfiles/kml/paddle/B.png' }"
       />
-      <!-- <GmapPolyline :path="[FromPoint, ToPoint]" :options="polylineOptions" /> -->
+      <GmapPolyline :path="polylinePath" :options="polylineOptions" />
     </GmapMap>
     <div style="width: 100%; text-align: right" v-if="isMultiLocation">
       <i style="font-size: 10px; color: #fb8080"
@@ -77,6 +77,7 @@ vueI
 
 <script>
 import { EventBus } from "~/assets/scripts/EventBus";
+import { ShowMessage } from "~/assets/scripts/Functions";
 import Location from "~/assets/scripts/objects/menu/Location";
 
 export default {
@@ -88,6 +89,7 @@ export default {
   data() {
     return {
       clickStep: 1,
+      zoom: 10,
       FromPoint: {
         lat: 0,
         lng: 0,
@@ -105,7 +107,8 @@ export default {
       polylineOptions: {
         // strokeColor: "",
         strokeOpacity: 1.0,
-        strokeWeight: 5,
+        strokeWeight: 3,
+        geodesic: true,
       },
 
       markers: [],
@@ -133,6 +136,12 @@ export default {
             Lng: marker.position.lng,
           };
         });
+        this.polylinePath = newVal.map((marker) => ({
+          lat: marker.position.lat,
+          lng: marker.position.lng,
+        }));
+
+        // console.log("this.polylinePath", this.polylinePath);
       },
       // immediate: true,
     },
@@ -195,8 +204,11 @@ export default {
           };
         },
         (err) => {
-          // Optional: handle geolocation error
-          // console.error("Geolocation error:", err);
+          this.initCenter = new Location({
+            lat: 21.0277644,
+            lng: 105.8341598,
+          });
+          this.zoom = 5;
         }
       );
     },

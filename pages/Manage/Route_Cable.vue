@@ -73,7 +73,7 @@ export default {
     return {
       isAdd: null,
       tp: new TablePaging({
-        title: "Điểm sáng (Cột đèn)",
+        title: "tuyến cáp (Cột đèn)",
         data: API.Route_Cable_GetList,
         params: {
           iRoute_Cabinet_id: "",
@@ -195,10 +195,10 @@ export default {
       this.$refs.tp.LoadData(true);
     },
     Add() {
-      this.form.ShowForm("Thêm điểm sáng", true);
+      this.form.ShowForm("Thêm tuyến cáp", true);
     },
     Edit(row) {
-      this.form.ShowForm("Sửa điểm sáng", false, row);
+      this.form.ShowForm("Sửa tuyến cáp", false, row);
     },
     Delete(row) {
       ShowConfirm({

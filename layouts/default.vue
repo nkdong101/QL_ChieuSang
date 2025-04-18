@@ -12,6 +12,7 @@
 
 <script>
 import API from "~/assets/scripts/API";
+import { ShowMessage } from "~/assets/scripts/Functions";
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import MenuItem from "~/assets/scripts/objects/MenuItem";
 import { Para } from "~/assets/scripts/Para";
@@ -178,6 +179,18 @@ export default {
             },
           });
         });
+        let dm_Route_Cable = new Promise((rs) => {
+          GetDataAPI({
+            url: API.Route_Cable_GetList,
+            params: {
+              iRoute_Cabinet_id: "",
+            },
+            action: (re) => {
+              Para.dm_Route_Cable.data = re;
+              rs();
+            },
+          });
+        });
 
         let account = new Promise((rs) => {
           GetDataAPI({
@@ -202,6 +215,7 @@ export default {
           dm_Managem,
           account,
           Cable_type_id,
+          dm_Route_Cable,
           dm_Routes,
           dm_Commune,
         ]).then((result) => {
@@ -216,6 +230,26 @@ export default {
         });
       });
     },
+
+    // checkAllowLocation() {
+    //   navigator.permissions
+    //     .query({ name: "geolocation" })
+    //     .then(function (permissionStatus) {
+    //       console.log("Quyền truy cập vị trí:", permissionStatus.state);
+
+    //       if (permissionStatus.state != "granted") {
+    //        ShowMessage("Trình duyệt")
+    //       }
+
+    //       // Theo dõi nếu quyền thay đổi
+    //       permissionStatus.onchange = function () {
+    //         console.log(
+    //           "Quyền truy cập vị trí thay đổi thành:",
+    //           permissionStatus.state
+    //         );
+    //       };
+    //     });
+    // },
   },
   mounted() {
     // console.log("default", this);

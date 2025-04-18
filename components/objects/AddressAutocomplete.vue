@@ -26,6 +26,7 @@ export default {
       this.address = newValue;
     },
     address(newValue) {
+      console.log("newValue", newValue);
       this.$nextTick(() => {
         this.$emit("input", newValue);
       });
@@ -51,10 +52,10 @@ export default {
   },
   methods: {
     handleChange() {},
-    handleBlur() {
-      // console.log("blur", this.address);
-      // this.handleEnter();
-      // this.$emit("blur", this.address);
+    handleBlur() {},
+    changePosition(address) {
+      console.log("changePO", address);
+      this.address = address;
     },
     initAutocomplete() {
       // Get the actual <input> element inside el-input
@@ -115,7 +116,10 @@ export default {
     },
     observePacItems() {
       const pacContainer = document.querySelectorAll(".pac-container");
+      console.log("pacContainer", pacContainer);
+      pacContainer.forEach((p) => console.log(p));
       const currentContainer = pacContainer[pacContainer.length - 1];
+      console.log("currentContainer", currentContainer);
       if (pacContainer.length === 0) {
         // console.log9;
         console.log("No pac-container found");
@@ -123,6 +127,7 @@ export default {
       }
       const observer = new MutationObserver(() => {
         const pacItems = currentContainer.querySelector(".pac-item");
+        console.log("pacItems", pacItems);
         if (pacItems) {
           pacItems.classList.add("my-custom-class");
         }
@@ -149,6 +154,13 @@ export default {
         }, 100);
       }
     },
+  },
+
+  beforeMount() {
+    EventBus.$on("changePosition", this.changePosition);
+  },
+  beforeDestroy() {
+    EventBus.$off("changePosition", this.changePosition);
   },
 };
 </script>

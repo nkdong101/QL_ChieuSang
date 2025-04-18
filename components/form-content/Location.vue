@@ -16,22 +16,37 @@
         ></el-input>
       </el-tooltip>
     </div>
-
-    <GmapMap
-      ref="gmap"
-      :center="initCenter"
-      @click="updateMarkerPosition"
-      :zoom="8"
-      style="width: 100%; height: 400px"
+    <div
+      ref="containerMap"
+      class="container-map"
+      :class="{ expanded: isExpandedSearch }"
     >
-      <GmapMarker :position="position" />
-      <GmapPolyline :path="polylinePath" :options="polylineOptions" />
-    </GmapMap>
+      <div class="autocomplete">
+        <GmapAutocomplete
+          ref="autocomplete"
+          @place_changed="setPlace"
+          placeholder="Search for a place"
+        />
+        <i ref="search" class="el-icon-search" @click="expandInputSearch" />
+      </div>
+
+      <GmapMap
+        ref="gmap"
+        :center="initCenter"
+        @click="updateMarkerPosition"
+        :zoom="zoom"
+        style="width: 100%; height: 400px"
+      >
+        <GmapMarker :position="position" />
+        <GmapPolyline :path="polylinePath" :options="polylineOptions" />
+      </GmapMap>
+    </div>
   </div>
 </template>
 
 <script>
 import { EventBus } from "~/assets/scripts/EventBus";
+import { ShowMessage } from "~/assets/scripts/Functions";
 import Location from "~/assets/scripts/objects/menu/Location";
 
 export default {
@@ -41,6 +56,9 @@ export default {
   name: "MapView",
   data() {
     return {
+      isExpandedSearch: false,
+      isLoaded: false,
+      zoom: 8,
       position: {},
       initCenter: {},
       mapOptions: {
@@ -66,9 +84,40 @@ export default {
         Lat: nv.lat,
         Lng: nv.lng,
       });
+      // this.reverseGeocode(nv.lat, nv.lng);
     },
   },
   methods: {
+    reverseGeocode(lat, lng) {
+      const geocoder = new google.maps.Geocoder();
+      const latlng = { lat: lat, lng: lng };
+
+      geocoder.geocode({ location: latlng }, (results, status) => {
+        if (status === "OK") {
+          if (results[0]) {
+            const address = results[0].formatted_address;
+            const inputEl = this.$el.querySelector(".autocomplete input");
+            inputEl.value = address;
+            EventBus.$emit("changePosition", address);
+          } else {
+            console.warn("No results found");
+          }
+        } else {
+          console.error("Geocoder failed due to: " + status);
+        }
+      });
+    },
+    expandInputSearch() {
+      this.isExpandedSearch = !this.isExpandedSearch;
+
+      this.$nextTick(() => {
+        const inputEl = this.$el.querySelector(".autocomplete input");
+        // inputEl.value = "";
+        if (inputEl && this.isExpandedSearch) {
+          inputEl.focus();
+        }
+      });
+    },
     // directions() {
     //   const directionsService = new google.maps.DirectionsService();
 
@@ -95,15 +144,30 @@ export default {
     //   );
     // },
     handlePlaceChange(data) {
-      console.log("handlePlaceChange", data);
+      // console.log("handlePlaceChange", data);
       this.position = data;
       this.initCenter = data;
     },
     updateMarkerPosition(event) {
+      this.isExpandedSearch = false;
       this.position = {
         lat: event.latLng.lat(),
         lng: event.latLng.lng(),
       };
+
+      this.reverseGeocode(event.latLng.lat(), event.latLng.lng());
+    },
+
+    setPlace(re) {
+      console.log(re);
+
+      if (!re.geometry) return;
+
+      this.position = {
+        lat: re.geometry.location.lat(),
+        lng: re.geometry.location.lng(),
+      };
+      this.initCenter = this.position;
     },
   },
   mounted() {
@@ -127,6 +191,12 @@ export default {
           },
           (err) => {
             //   console.error("Geolocation error:", err);
+
+            this.initCenter = new Location({
+              lat: 21.0277644,
+              lng: 105.8341598,
+            });
+            this.zoom = 5;
           }
         );
       } else {
@@ -141,6 +211,7 @@ export default {
         });
       }
     });
+    this.isLoaded = true;
 
     // this.$nextTick(() => {
     //   this.$emit("input", this.value);
@@ -163,6 +234,48 @@ export default {
   gap: 10px;
   margin-bottom: 10px;
 }
+.container-map {
+  position: relative;
+
+  .autocomplete {
+    position: absolute;
+    z-index: 99999;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    top: 9px;
+    right: 60px;
+    padding: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    input {
+      background-color: inherit;
+      outline: none !important;
+      border: none !important;
+      padding: 0;
+      box-shadow: none;
+      font-size: 16px;
+      margin: 0;
+      width: 0px;
+      // opacity: 0;
+      transition: all 0.4s ease;
+    }
+    i {
+      cursor: pointer;
+      font-size: 20px;
+      margin-right: 1px;
+      color: black;
+      // padding: 0 8px;
+    }
+  }
+  &.expanded {
+    input {
+      width: 200px;
+
+      opacity: 1;
+    }
+  }
+}
+
 // .gm-style {
 //   cursor: pointer !important;
 // }
