@@ -54,7 +54,7 @@ export default {
     handleChange() {},
     handleBlur() {},
     changePosition(address) {
-      console.log("changePO", address);
+      // console.log("changePO", address);
       this.address = address;
     },
     initAutocomplete() {
@@ -70,11 +70,11 @@ export default {
         const place = this.autocomplete.getPlace();
         console.log("place", place);
         let pos = {
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng(),
+          lat: place.geometry?.location.lat(),
+          lng: place.geometry?.location.lng(),
         };
 
-        console.log("pos", pos);
+        // console.log("pos", pos);
         EventBus.$emit("placeChange", pos);
         this.address = place.formatted_address || "";
         // console.log("Selected place:", this.address);
@@ -116,7 +116,11 @@ export default {
     },
     observePacItems() {
       const pacContainer = document.querySelectorAll(".pac-container");
-      console.log("pacContainer", pacContainer);
+      // const visiblePacContainers = Array.from(pacContainer).filter((el) => {
+      //   return window.getComputedStyle(el).display !== "none";
+      // });
+      // console.log("pacContainer", pacContainer);
+      // console.log("visiblePacContainers", visiblePacContainers);
       pacContainer.forEach((p) => console.log(p));
       const currentContainer = pacContainer[pacContainer.length - 1];
       console.log("currentContainer", currentContainer);
