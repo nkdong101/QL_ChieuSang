@@ -32,6 +32,7 @@
 
       <GmapMap
         ref="gmap"
+        :options="mapOptions"
         :center="initCenter"
         @click="updateMarkerPosition"
         :zoom="zoom"
@@ -62,9 +63,8 @@ export default {
       position: {},
       initCenter: {},
       mapOptions: {
-        mapTypeControl: false,
-        // draggableCursor: "grab",
-        // draggingCursor: "grabbing",
+        draggableCursor: "pointer", // Default cursor
+        draggingCursor: "grabbing",
       },
       polylinePath: [
         // { lat: 37.772, lng: -122.214 },
