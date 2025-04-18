@@ -68,7 +68,9 @@ vueI
       <!-- <GmapPolyline :path="[FromPoint, ToPoint]" :options="polylineOptions" /> -->
     </GmapMap>
     <div style="width: 100%; text-align: right" v-if="isMultiLocation">
-      <i style="font-size: 10px">Kích chuột phải để xóa điểm đã chọn</i>
+      <i style="font-size: 10px; color: #fb8080"
+        >Kích chuột phải để xóa điểm đã chọn</i
+      >
     </div>
   </div>
 </template>
