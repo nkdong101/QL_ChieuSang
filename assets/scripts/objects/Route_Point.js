@@ -6,6 +6,7 @@ import {
 import { SelectOption } from "../base/SelectOption";
 import { Para } from "../Para";
 import Address from "./menu/Location";
+import API from "../API";
 export default class dm_Lighting_Group {
   Location = new Address();
   /** @type {string} - description */
@@ -54,7 +55,15 @@ export default class dm_Lighting_Group {
       label: "Đoạn cáp",
       model: "Route_Cables",
       type: FormElementType.select,
-      options: Para.dm_Route_Cable,
+      options(data) {
+        return new SelectOption({
+          data: API.Route_Cable_GetList,
+          key: "Route_Cable_id",
+          params: {
+            iRoute_Cabinet_id: data.Route_cabinet_id || "",
+          },
+        });
+      },
     }),
     Commune_id: new FormElement({
       label: "Xã/Phường",

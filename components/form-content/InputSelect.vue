@@ -281,6 +281,9 @@ export default {
       ) {
         this.valueSelect = this.options[0][this.model.value];
         this.$emit("input", this.valueSelect);
+      } else if (this.options.length != 1) {
+        this.valueSelect = "";
+        this.$emit("input", this.valueSelect);
       }
     },
     Init() {

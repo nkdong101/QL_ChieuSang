@@ -6,6 +6,7 @@ import {
 import { SelectOption } from "../base/SelectOption";
 import { Para } from "../Para";
 import Address from "./menu/Location";
+import API from "../API";
 export default class dm_Lighting_Group {
   Route_Cabinet_id; // tủ chiếu sáng
   Route_Cable_id; //doạn cáp
@@ -16,12 +17,28 @@ export default class dm_Lighting_Group {
       model: "Route_Cabinet_id",
       type: FormElementType.select,
       options: Para.dm_Route_cabinet,
+      watch(data, n, o, t, iF) {
+        if (!iF) {
+          if (n != o) {
+            // data.Route_Cable_id = "";
+            console.log(data.Route_Cable_id);
+          }
+        }
+      },
     }),
     Route_Cable_id: new FormElement({
       label: "Đoạn cáp",
       model: "Route_Cable_id",
       type: FormElementType.select,
-      options: Para.dm_Route_Cable,
+      options(data) {
+        return new SelectOption({
+          data: API.Route_Cable_GetList,
+          key: "Route_Cable_id",
+          params: {
+            iRoute_Cabinet_id: data.Route_Cabinet_id || "",
+          },
+        });
+      },
     }),
     Route_id: new FormElement({
       label: "Tuyến đường",
