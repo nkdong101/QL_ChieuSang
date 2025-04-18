@@ -42,7 +42,7 @@ vueI
       :center="initCenter"
       @click="updateMarkerPosition"
       :options="mapOptions"
-      :zoom="15"
+      :zoom="10"
       style="width: 100%; height: 400px"
     >
       <GmapMarker
@@ -132,6 +132,7 @@ export default {
           };
         });
       },
+      // immediate: true,
     },
   },
   methods: {
@@ -177,80 +178,59 @@ export default {
       //   // Ví dụ: cập nhật FromPoint
       //   console.log("Updated FromPoint to:", this.FromPoint);
     },
+
+    setPoint(key, point) {
+      if (point?.Lat && point?.Lng) {
+        this[key] = { lat: point.Lat, lng: point.Lng };
+      }
+    },
+    setCurrentLocationAsInitCenter() {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          this.initCenter = {
+            lat: pos.coords.latitude,
+            lng: pos.coords.longitude,
+          };
+        },
+        (err) => {
+          // Optional: handle geolocation error
+          // console.error("Geolocation error:", err);
+        }
+      );
+    },
   },
   mounted() {
-    console.log("this.value", this.p_Obj);
-    if (!this.isMultiLocation) {
-      if (this.p_Obj.From_Point.Lat && this.p_Obj.From_Point.Lng) {
-        this.FromPoint = {
-          lat: this.p_Obj.From_Point.Lat,
-          lng: this.p_Obj.From_Point.Lng,
-        };
-      }
-      if (this.p_Obj.To_Point.Lat && this.p_Obj.To_Point.Lng) {
-        this.ToPoint = {
-          lat: this.p_Obj.To_Point.Lat,
-          lng: this.p_Obj.To_Point.Lng,
-        };
-      }
-    } else {
-      // this.clickStep = 0;
-      this.markers = (this.p_Obj.Locations || []).map((location) => {
-        return {
+    this.$nextTick(() => {
+      console.log("this.value", this.p_Obj);
+
+      if (!this.isMultiLocation) {
+        this.setPoint("FromPoint", this.p_Obj?.From_Point);
+        this.setPoint("ToPoint", this.p_Obj?.To_Point);
+
+        if (
+          navigator.geolocation &&
+          !this.FromPoint?.lat &&
+          !this.FromPoint?.lng
+        ) {
+          this.setCurrentLocationAsInitCenter();
+        } else if (this.FromPoint?.lat && this.FromPoint?.lng) {
+          this.initCenter = this.FromPoint;
+        }
+      } else {
+        this.markers = (this.p_Obj?.Locations || []).map((location) => ({
           position: {
             lat: location.Lat,
             lng: location.Lng,
           },
-        };
-      });
-    }
+        }));
 
-    // console.log(navigator.geolocation);
-    this.$nextTick(() => {
-      // this.directions();
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-          (pos) => {
-            if (this.isMultiLocation && this.markers.length > 0) {
-              console.log("this.markers", this.markers);
-              this.initCenter = {
-                lat: this.markers[0].position.lat,
-                lng: this.markers[0].position.lng,
-              };
-              console.log("this.initCenter", this.initCenter);
-            } else {
-              if (this.p_Obj.From_Point?.Lat && this.p_Obj.From_Point?.Lng) {
-                this.initCenter = {
-                  lat: this.p_Obj.From_Point.Lat,
-                  lng: this.p_Obj.From_Point.Lng,
-                };
-              } else if (this.p_Obj.To_Point?.Lat && this.p_Obj.To_Point?.Lng) {
-                this.initCenter = {
-                  lat: this.p_Obj.To_Point.Lat,
-                  lng: this.p_Obj.To_Point.Lng,
-                };
-              } else {
-                this.initCenter = {
-                  lat: pos.coords.latitude,
-                  lng: pos.coords.longitude,
-                };
-              }
-            }
-            // this.initCenter = new Location({
-            //   lat: pos.coords.latitude,
-            //   lng: pos.coords.longitude,
-            // });
-          },
-          (err) => {
-            //   console.error("Geolocation error:", err);
-          }
-        );
+        if (!this.markers.length) {
+          this.setCurrentLocationAsInitCenter();
+        } else {
+          this.initCenter = { ...this.markers[0].position };
+        }
       }
     });
-
-    // this.$nextTick(() => {
-    //   this.$emit("input", this.value);
-    // });
   },
 };
 </script>
