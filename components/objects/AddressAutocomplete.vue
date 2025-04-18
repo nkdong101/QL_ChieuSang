@@ -51,7 +51,9 @@ export default {
     }, 500);
   },
   methods: {
-    handleChange() {},
+    handleChange() {
+      this.observePacItems();
+    },
     handleBlur() {},
     changePosition(address) {
       // console.log("changePO", address);
@@ -114,16 +116,16 @@ export default {
 
       // }, 100);
     },
+
+    // UI select first of dropdown
     observePacItems() {
       const pacContainer = document.querySelectorAll(".pac-container");
-      // const visiblePacContainers = Array.from(pacContainer).filter((el) => {
-      //   return window.getComputedStyle(el).display !== "none";
-      // });
-      // console.log("pacContainer", pacContainer);
-      // console.log("visiblePacContainers", visiblePacContainers);
-      pacContainer.forEach((p) => console.log(p));
-      const currentContainer = pacContainer[pacContainer.length - 1];
-      console.log("currentContainer", currentContainer);
+      const visiblePacContainers = Array.from(pacContainer).filter((el) => {
+        return window.getComputedStyle(el).display !== "none";
+      });
+
+      const currentContainer = visiblePacContainers[0];
+      // console.log("currentContainer", currentContainer);
       if (pacContainer.length === 0) {
         // console.log9;
         console.log("No pac-container found");
@@ -131,7 +133,7 @@ export default {
       }
       const observer = new MutationObserver(() => {
         const pacItems = currentContainer.querySelector(".pac-item");
-        console.log("pacItems", pacItems);
+        // console.log("pacItems", pacItems);
         if (pacItems) {
           pacItems.classList.add("my-custom-class");
         }
@@ -143,20 +145,21 @@ export default {
           childList: true,
           subtree: true,
         });
-      } else {
-        // Retry until the container exists
-        const interval = setInterval(() => {
-          const pacContainer = document.querySelectorAll(".pac-container");
-          const currentContainer = pacContainer[pacContainer.length - 1];
-          if (currentContainer) {
-            clearInterval(interval);
-            observer.observe(currentContainer, {
-              childList: true,
-              subtree: true,
-            });
-          }
-        }, 100);
       }
+      // else {
+      //   // Retry until the container exists
+      //   const interval = setInterval(() => {
+      //     const pacContainer = document.querySelectorAll(".pac-container");
+      //     const currentContainer = pacContainer[pacContainer.length - 1];
+      //     if (currentContainer) {
+      //       clearInterval(interval);
+      //       observer.observe(currentContainer, {
+      //         childList: true,
+      //         subtree: true,
+      //       });
+      //     }
+      //   }, 100);
+      // }
     },
   },
 
