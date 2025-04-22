@@ -64,8 +64,8 @@ export default class User {
     Address: new FormElement({
       label: "Địa chỉ",
       model: "Address",
-      type: FormElementType.select,
-      options: Para.GroupPermission,
+      type: FormElementType.text,
+      // options: Para.GroupPermission,
     }),
     Birthday: new FormElement({
       label: "Ngày sinh",

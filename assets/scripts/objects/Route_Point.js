@@ -163,6 +163,7 @@ export default class dm_Lighting_Group {
         new FormElement({
           child: [
             this._formElements.Hangsx_id,
+
             this._formElements.Route_cabinet_id,
           ],
         }),
@@ -182,7 +183,7 @@ export default class dm_Lighting_Group {
         this._formElements.Address,
         this._formElements.Location,
 
-        // new FormElement({
+        // new FormElem1ent({
         //   child: [
         //     this._formElements.Location_lat,
         //     this._formElements.Location_lng,

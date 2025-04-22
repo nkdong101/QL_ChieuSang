@@ -33,6 +33,7 @@ export default class dm_Lighting_Group {
       options(data) {
         return new SelectOption({
           data: API.Route_Cable_GetList,
+
           key: "Route_Cable_id",
           params: {
             iRoute_Cabinet_id: data.Route_Cabinet_id || "",
