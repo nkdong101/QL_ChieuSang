@@ -19,9 +19,13 @@ export var Para = {
     data: [],
   }),
 
-  OrderProcess: new SelectOption({
-    data: API.Purchase_SearchOrderProcess,
-    remote: true,
+  Container_Type: new SelectOption({
+    data: [
+      { Id: 1, Name: "Tủ chiếu sáng" },
+      { Id: 2, Name: "Điểm sáng (cột đèn)" },
+      { Id: 3, Name: "Tuyến cáp" },
+      { Id: 10, Name: "Các loại khác" },
+    ],
   }),
   dm_Route_Cable: new SelectOption({
     data: [],

@@ -114,6 +114,10 @@ export default {
   Routes_Add: linkAPI + "Routes/Add",
   Routes_Edit: linkAPI + "Routes/Edit",
   Routes_Delete: linkAPI + "Routes/Delete",
+
+  Get_Cabinet_Tree: linkAPI + "Giamsat/Get_Cabinet_Tree",
+  Get_Cabinet_Map_Data: linkAPI + "Giamsat/Get_Cabinet_Map_Data",
+  Get_Route_Tree: linkAPI + "Giamsat/Get_Route_Tree",
 };
 
 export var ServerAPI = {
