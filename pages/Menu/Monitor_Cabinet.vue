@@ -26,11 +26,15 @@
           }"
           :active="activeInfoWindow === 'type1'"
           :type-id="resultMap.Cabinet.Type_id"
+          :iconUrl="'/tudienIcon.png'"
           @click="activeInfoWindow = 'type1'"
           @close="activeInfoWindow = null"
         />
 
-        <GmapPolyline :path="polylinePath_Cables" :options="polylineOptions" />
+        <GmapPolyline
+          :path="polylinePath_Cables.map((p) => p.Location)"
+          :options="polylineOptions"
+        />
         <!-- <GmapPolyline :path="polylinePath_Points" :options="polylineOptions" /> -->
         <Marker_Info
           v-for="(marker, index) in polylinePath_Points"
@@ -43,17 +47,16 @@
           :active="activeInfoWindow === marker.Id"
           @click="openInfoWindow(marker.Id)"
           @close="activeInfoWindow = null"
+          :iconUrl="'/cotdienIcon.png'"
         />
         <Marker_Info
           v-for="(marker, index) in polylinePath_Cables"
           :key="marker.Id"
-          :position="{
-            lat: marker.Location.Lat,
-            lng: marker.Location.Lng,
-          }"
+          :position="marker.Location"
           :type-id="marker.Type_id"
           :active="activeInfoWindow === marker.Id"
           @click="openInfoWindow(marker.Id)"
+          :iconUrl="'/cotdienIcon.png'"
           @close="activeInfoWindow = null"
         />
       </GmapMap>
@@ -101,7 +104,10 @@ export default {
         return (cable.Locations ?? []).map((point, index) => ({
           Id: `${index + 1}cable`,
           Type_id: cable.Type_id,
-          Location: point,
+          Location: {
+            lat: point.Lat,
+            lng: point.Lng,
+          },
         }));
       });
     },

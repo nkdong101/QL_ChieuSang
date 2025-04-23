@@ -3,6 +3,10 @@
   <GmapMarker
     :position="position"
     @click="handleClick"
+    :icon="{
+      url: iconUrl,
+      scaledSize: { width: 70, height: 70 },
+    }"
     @mouseover="hover = true"
     @mouseout="hover = false"
   >
@@ -27,6 +31,7 @@
 <script>
 export default {
   props: {
+    iconUrl: {},
     position: {
       type: Object,
       required: true,
