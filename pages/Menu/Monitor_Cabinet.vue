@@ -32,8 +32,20 @@
         />
 
         <GmapPolyline
-          :path="polylinePath_Cables.map((p) => p.Location)"
-          :options="polylineOptions"
+          v-for="(item, index) in resultMap?.Cables"
+          :key="item.Id"
+          :path="
+            item.Locations.map((p) => {
+              return {
+                lat: p.Lat,
+                lng: p.Lng,
+              };
+            })
+          "
+          :options="{
+            ...polylineOptions,
+            strokeColor: generateColor(index),
+          }"
         />
         <!-- <GmapPolyline :path="polylinePath_Points" :options="polylineOptions" /> -->
         <Marker_Info
@@ -50,7 +62,7 @@
           :iconUrl="'/cotdienIcon.png'"
         />
         <Marker_Info
-          v-for="(marker, index) in polylinePath_Cables"
+          v-for="(marker, index) in markerFor_Cables"
           :key="marker.Id"
           :position="marker.Location"
           :type-id="marker.Type_id"
@@ -68,7 +80,7 @@
 import API from "~/assets/scripts/API";
 import GetDataAPI from "~/assets/scripts/GetDataAPI";
 import { Para } from "~/assets/scripts/Para";
-
+import { generateHEXColor } from "~/assets/scripts/Functions";
 export default {
   data() {
     return {
@@ -81,7 +93,6 @@ export default {
           Id: 0,
         },
       },
-      ToPoint: { lat: 0, lng: 0 },
       initCenter: { lat: 0, lng: 0 },
       mapOptions: {
         draggableCursor: "pointer", // Default cursor
@@ -90,8 +101,8 @@ export default {
 
       polylineOptions: {
         // strokeColor: "",
-        strokeOpacity: 1.0,
-        strokeWeight: 3,
+        strokeOpacity: 2.0,
+        strokeWeight: 5,
         // geodesic: true,
       },
 
@@ -99,7 +110,7 @@ export default {
     };
   },
   computed: {
-    polylinePath_Cables() {
+    markerFor_Cables() {
       return (this.resultMap?.Cables ?? []).flatMap((cable) => {
         return (cable.Locations ?? []).map((point, index) => ({
           Id: `${index + 1}cable`,
@@ -119,9 +130,12 @@ export default {
   },
 
   methods: {
+    generateColor(index) {
+      return generateHEXColor(index);
+    },
     smoothZoomAndCenter(targetLatLng, finalZoom = 12) {
       const map = this.$refs.gmap.$mapObject;
-      const stepDelay = 160; // ms
+      const stepDelay = 120; // ms
       const currentZoom = map.getZoom();
 
       // Di chuyển tới vị trí mới
@@ -156,7 +170,7 @@ export default {
         },
       };
 
-      this.zoom = 5;
+      this.zoom = 6;
     },
     handleClick() {
       this.resetState();
@@ -174,7 +188,7 @@ export default {
 
           this.smoothZoomAndCenter(
             { lat: re.Cabinet.Location.Lat, lng: re.Cabinet.Location.Lng },
-            12
+            15
           );
         },
       });
@@ -217,7 +231,7 @@ export default {
             lng: 108.2772,
           };
 
-          this.zoom = 5;
+          this.zoom = 6;
         }
       );
     },
